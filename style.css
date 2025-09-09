@@ -511,15 +511,15 @@ button:hover {
     display: grid;
     height: 10px;
     position: absolute;
-    top: 318px;
+    top: 320px;
     left: 45px;
-    width: 200px;
+    width: 350px;
 }
 
 .circle-group {
     text-align: left;
     background: transparent !important;
-    padding: 6px;
+    padding: 5px;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -530,17 +530,17 @@ button:hover {
     display: flex;
     flex-wrap: wrap;
     gap: 2px;
-    justify-content: flex-start; /* Выравнивание по левому краю */
-    align-items: flex-start; /* Выравнивание по верху */
+    justify-content: flex-start; 
+    align-items: flex-start; 
     margin: 0;
     max-height: 20px;
     overflow: hidden;
-    width: 200%;
+    width: 110%;
 }
 
 .circle-item {
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     border: 2px solid #000000;
     border-radius: 50%;
     background: #ffffff;
