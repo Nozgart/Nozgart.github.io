@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Генератор карточек для BattleTech Alpha Strike">
+    <title>BattleTech Alpha Strike Card Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <h1>Генератор карточек Alpha Strike</h1>
+        
+        <!-- Панель управления -->
+        <div class="controls">
+            <!-- Основная информация -->
+            <div class="input-group">
+                <label for="unitName">Название юнита:</label>
+                <input type="text" id="unitName" value="VICTOR STEINER-DAVION">
+                
+                <label for="unitVariant">Модификация:</label>
+                <input type="text" id="unitVariant" value="DAISHI (DIRE WOLF)">
+                
+                <label for="unitRole">Роль:</label>
+                <input type="text" id="unitRole" value="Juggernaut" maxlength="20">
+            </div>
+
+            <!-- Компактная группа характеристик -->
+            <div class="compact-input-group">
+                <div>
+                    <label for="unitType">TP</label>
+                    <input type="text" id="unitType" value="BM" maxlength="3">
+                </div>
+                <div>
+                    <label for="unitSize">SZ</label>
+                    <input type="number" id="unitSize" value="1" min="1" max="6">
+                </div>
+                <div>
+                    <label for="unitTMM">TMM</label>
+                    <input type="number" id="unitTMM" value="1" min="0" max="5">
+                </div>
+                <div>
+                    <label for="unitMove">MV</label>
+                    <input type="text" id="unitMove" value="6&quot;" maxlength="8">
+                </div>
+                <div>
+                    <label for="unitSkill">SKILL</label>
+                    <input type="number" id="unitSkill" value="3" min="0" max="8">
+                </div>
+            </div>
+
+            <!-- Очковая стоимость -->
+            <div class="input-group">
+                <label for="unitPoints">Очковая стоимость (PV):</label>
+                <input type="number" id="unitPoints" value="66" min="0" max="100" style="width: 60px;">
+            </div>
+
+            <!-- Броня и структура -->
+            <div class="circle-input-group">
+                <div class="circle-input">
+                    <label for="armorValue">Броня (A):</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="armorValue" value="5" min="0" max="20">
+                        <div class="circle-preview" id="armorPreview"></div>
+                    </div>
+                </div>
+                <div class="circle-input">
+                    <label for="structureValue">Структура (S):</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="structureValue" value="5" min="0" max="20">
+                        <div class="circle-preview" id="structurePreview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Урон -->
+            <div class="input-group">
+                <label>Урон:</label>
+                <div class="damage-inputs">
+                    <div>
+                        <label for="damageS">S (+0)</label>
+                        <input type="text" id="damageS" value="6" pattern="[0-9*]*" maxlength="3">
+                    </div>
+                    <div>
+                        <label for="damageM">M (+2)</label>
+                        <input type="text" id="damageM" value="6" pattern="[0-9*]*" maxlength="3">
+                    </div>
+                    <div>
+                        <label for="damageL">L (+4)</label>
+                        <input type="text" id="damageL" value="4" pattern="[0-9*]*" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Перегрев -->
+            <div class="input-group">
+                <label for="overheatValue">Перегрев (OV):</label>
+                <input type="number" id="overheatValue" value="3" min="0" max="5" style="width: 60px;">
+            </div>
+
+            <!-- Изображение -->
+            <div class="image-input-group">
+                <label for="imageUrl">Ссылка на изображение:</label>
+                <input type="text" id="imageUrl" placeholder="URL изображения">
+                
+                <label for="imageUpload">Или выберите файл:</label>
+                <input type="file" id="imageUpload" accept="image/*">
+                
+                <div class="image-preview" id="imagePreview">
+                    <span>Предпросмотр изображения</span>
+                </div>
+            </div>
+
+            <!-- Особые способности -->
+            <div class="special-abilities-input">
+                <label for="specialAbilities">Особые способности:</label>
+                <input type="text" id="specialAbilities" value="CASE, OMNI, OVL">
+            </div>
+
+            <!-- Кнопки -->
+            <div class="button-group">
+                <button id="generateBtn">Сгенерировать</button>
+                <button id="exportBtn">Экспорт PNG</button>
+            </div>
+        </div>
+
+        <!-- Область предпросмотра карточки -->
+        <div class="preview">
+            <h2>Предпросмотр:</h2>
+            <div id="cardContainer">
+                <!-- Сюда будет вставлена сгенерированная карточка -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем библиотеки -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

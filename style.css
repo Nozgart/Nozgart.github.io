@@ -1,0 +1,631 @@
+/* Основные стили приложения */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    min-height: 100vh;
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+@media (min-width: 1200px) {
+    .app-container {
+        grid-template-columns: 400px 1fr;
+    }
+}
+
+h1 {
+    text-align: center;
+    margin: 0 0 20px 0;
+    color: #f1c40f;
+    grid-column: 1 / -1;
+    font-size: 24px;
+}
+
+/* Компактные стили для формы ввода */
+.controls {
+    background: #34495e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.input-group {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #4a5c6c;
+}
+
+.input-group:last-child {
+    border-bottom: none;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: 11px;
+    color: #bdc3c7;
+    text-transform: uppercase;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"],
+textarea {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #4a5c6c;
+    border-radius: 4px;
+    background: #2c3e50;
+    color: #ecf0f1;
+    margin-bottom: 6px;
+    font-family: 'Courier New', monospace;
+    box-sizing: border-box;
+    font-size: 13px;
+    height: 30px;
+}
+
+input[type="text"]::placeholder {
+    color: #7f8c8d;
+    font-size: 11px;
+}
+
+/* Компактные группы ввода */
+.compact-input-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.compact-input-group>div {
+    display: flex;
+    flex-direction: column;
+}
+
+.compact-input-group label {
+    text-align: center;
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.compact-input-group input {
+    text-align: center;
+    padding: 4px 2px;
+    height: 26px;
+    font-size: 11px;
+}
+
+/* Кружки брони и структуры */
+.circle-input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.circle-input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.circle-input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.circle-input input {
+    width: 45px;
+    height: 24px;
+    padding: 2px 4px;
+    font-size: 11px;
+}
+
+.circle-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    width: 90px;
+}
+
+.circle {
+    width: 8px;
+    height: 8px;
+    border: 1px solid #ecf0f1;
+    border-radius: 50%;
+    background: #ecf0f1;
+}
+
+.circle.structure {
+    background: #e74c3c;
+    border-color: #e74c3c;
+}
+
+/* Урон */
+.damage-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.damage-inputs>div {
+    text-align: center;
+}
+
+.damage-inputs label {
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.damage-inputs input {
+    height: 24px;
+    padding: 2px 4px;
+    font-size: 11px;
+}
+
+/* Изображение */
+.image-input-group {
+    margin-bottom: 12px;
+}
+
+.image-preview {
+    width: 100%;
+    height: 70px;
+    border: 1px dashed #7f8c8d;
+    border-radius: 4px;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #2c3e50;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.image-preview span {
+    color: #bdc3c7;
+    font-size: 10px;
+    text-align: center;
+    padding: 0 6px;
+}
+
+/* Особые способности */
+.special-abilities-input {
+    margin-bottom: 12px;
+}
+
+.special-abilities-input input {
+    height: 26px;
+    font-size: 11px;
+}
+
+/* Кнопки */
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background: #e74c3c;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    transition: background 0.3s;
+    height: 34px;
+}
+
+button:hover {
+    background: #c0392b;
+}
+
+/* Область предпросмотра */
+.preview {
+    background: #34495e;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 500px;
+}
+
+.preview h2 {
+    margin: 0 0 15px 0;
+    color: #f1c40f;
+    text-align: center;
+    font-size: 16px;
+}
+
+#cardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    min-height: 400px;
+}
+
+/* ГОРИЗОНТАЛЬНАЯ КАРТОЧКА */
+.alpha-strike-card {
+    width: 700px;
+    height: 500px;
+    background: url("data/cardBackground.png") center/cover no-repeat;
+    padding: 12px;
+    color: #ffffff;
+    position: relative;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.9);
+    font-family: 'Arial', sans-serif;
+    line-height: 1;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Поднимаем все элементы над overlay */
+.card-header,
+.card-stats,
+.card-image {
+    position: relative;
+    z-index: 1;
+}
+
+/* Заголовок */
+.card-header {
+    text-align: center;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    position: relative;
+    height: 50px;
+    background: transparent !important;
+}
+
+.unit-name {
+    font-size: 30px;
+    margin: 0;
+    color: #eed204;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    position: absolute;
+    text-align: left;
+    top: 15px;
+    left: 10px;
+    width: 100%;
+}
+
+.unit-variant {
+    font-size: 55px;
+    font-weight: bold;
+    margin: 1px 0;
+    color: #d52027;
+    text-shadow:
+        -1px -1px 0 #eed204,
+        1px -1px 0 #eed204,
+        -1px 1px 0 #eed204,
+        1px 1px 0 #eed204;
+    line-height: 1;
+    text-align: left;
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    width: 100%;
+}
+
+/* Область изображения (справа) */
+.card-image {
+    width: 240px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    top: 70px;
+    right: 30px;
+}
+
+.card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Основные характеристики (левый верхний угол) */
+.unit-stats {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 120px;
+    background: transparent !important;
+}
+
+.stat-item {
+    position: absolute;
+    text-align: center;
+    padding: 3px 2px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: transparent !important;
+}
+
+.stat-item.tp {
+    top: 54px;
+    left: 35px;
+    width: 40px;
+}
+
+.stat-item.sz {
+    top: 54px;
+    left: 122px;
+    width: 40px;
+}
+
+.stat-item.tmm {
+    top: 54px;
+    left: 217px;
+    width: 40px;
+}
+
+.stat-item.mv {
+    top: 54px;
+    left: 315px;
+    width: 40px;
+}
+
+.stat-item.role {
+    top: 80px;
+    left: 63px;
+    width: 100px;
+}
+
+.stat-item.skill {
+    top: 77px;
+    left: 335px;
+    width: 40px;
+}
+
+.stat-value {
+    color: #9e0e0d;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Урон (левый верхний угол под характеристиками) */
+.damage-section {
+    background: transparent !important;
+    padding: 6px;
+    border-radius: 4px;
+    height: 65px;
+    position: absolute;
+    top: 220px;
+    left: 20px;
+    width: 120px;
+}
+
+.damage-values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    text-align: center;
+}
+
+.damage-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #9e0e0d;
+    padding: 1px;
+    min-width: 130px;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+}
+
+.damage-value.has-star {
+    font-size: 20px;
+}
+
+/* Тепло (левый верхний угол под уроном) */
+.heat-section {
+    background: transparent !important;
+    padding: 6px;
+    border-radius: 4px;
+    height: 30px;
+    position: absolute;
+    top: 263px;
+    left: 10px;
+    width: 120px;
+}
+
+.heat-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.heat-item {
+    text-align: center;
+    padding: 3px;
+    min-width: 30px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.heat-value {
+    color: #9e0e0d;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.heat-scale {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    border: 1px solid #8b4513;
+    flex-grow: 1;
+    height: 25px;
+}
+
+.heat-scale-value {
+    font-weight: bold;
+    color: #ed1a20;
+    min-width: 10px;
+    display: inline-block;
+    font-size: 11px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Броня и структура (левый нижний угол) */
+.defense-section {
+    display: grid;
+    height: 10px;
+    position: absolute;
+    top: 318px;
+    left: 45px;
+    width: 200px;
+}
+
+.circle-group {
+    text-align: left;
+    background: transparent !important;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.circles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    align-items: flex-start; /* Выравнивание по верху */
+    margin: 0;
+    max-height: 20px;
+    overflow: hidden;
+    width: 200%;
+}
+
+.circle-item {
+    width: 12px;
+    height: 12px;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    background: #ffffff;
+    flex-shrink: 0;
+    margin: 0; /* Убираем отступы */
+}
+
+.circle-item.structure {
+    background: #ed1a20;
+    border-color: #000000;
+}
+
+/* Особые способности (правый нижний угол) */
+.special-abilities {
+    background: transparent !important;
+    padding: 6px;
+    border-radius: 4px;
+    margin-bottom: 0;    
+    
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 383px;
+    left: 130px;
+    width: 250px;
+    height: 35px;
+}
+
+.abilities-value {
+    font-size: 20px;
+    color: #9e0e0d;
+    line-height: 1.1;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* Очковая стоимость в правом верхнем углу */
+.points-badge {
+    position: absolute;
+    top: 4px;
+    right: 40px;
+    padding: 2px 5px;
+    font-weight: bold;
+    font-size: 40px;
+    color: #d52027;
+    text-shadow:
+        -1px -1px 0 #eed204,
+        1px -1px 0 #eed204,
+        -1px 1px 0 #eed204,
+        1px 1px 0 #eed204;
+}
+
+/* Адаптивность */
+@media (max-width: 1300px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+
+    .alpha-strike-card {
+        transform: scale(0.8);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 768px) {
+    .alpha-strike-card {
+        transform: scale(0.6);
+    }
+
+    .compact-input-group {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Стили для скроллбара */
+.controls::-webkit-scrollbar {
+    width: 6px;
+}
+
+.controls::-webkit-scrollbar-track {
+    background: #2c3e50;
+    border-radius: 3px;
+}
+
+.controls::-webkit-scrollbar-thumb {
+    background: #e74c3c;
+    border-radius: 3px;
+}
