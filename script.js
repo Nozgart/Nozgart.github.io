@@ -284,7 +284,6 @@ class CardGenerator {
                 </div>
             </div>
         </div>
-        </div>
 
         <div class="special-abilities">
             <div class="abilities-value">${data.specialAbilities}</div>
