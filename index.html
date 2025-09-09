@@ -16,13 +16,13 @@
             <!-- Основная информация -->
             <div class="input-group">
                 <label for="unitName">Название юнита:</label>
-                <input type="text" id="unitName" value="VICTOR STEINER-DAVION">
+                <input type="text" id="unitName" value="">
                 
                 <label for="unitVariant">Модификация:</label>
-                <input type="text" id="unitVariant" value="DAISHI (DIRE WOLF)">
+                <input type="text" id="unitVariant" value="">
                 
                 <label for="unitRole">Роль:</label>
-                <input type="text" id="unitRole" value="Juggernaut" maxlength="20">
+                <input type="text" id="unitRole" value="" maxlength="20">
             </div>
 
             <!-- Компактная группа характеристик -->
@@ -33,11 +33,11 @@
                 </div>
                 <div>
                     <label for="unitSize">SZ</label>
-                    <input type="number" id="unitSize" value="1" min="1" max="6">
+                    <input type="number" id="unitSize" value="1" min="1" max="99">
                 </div>
                 <div>
                     <label for="unitTMM">TMM</label>
-                    <input type="number" id="unitTMM" value="1" min="0" max="5">
+                    <input type="number" id="unitTMM" value="1" min="0" max="99">
                 </div>
                 <div>
                     <label for="unitMove">MV</label>
@@ -45,14 +45,14 @@
                 </div>
                 <div>
                     <label for="unitSkill">SKILL</label>
-                    <input type="number" id="unitSkill" value="3" min="0" max="8">
+                    <input type="number" id="unitSkill" value="4" min="0" max="12">
                 </div>
             </div>
 
             <!-- Очковая стоимость -->
             <div class="input-group">
                 <label for="unitPoints">Очковая стоимость (PV):</label>
-                <input type="number" id="unitPoints" value="66" min="0" max="100" style="width: 60px;">
+                <input type="number" id="unitPoints" value="11" min="0" max="100" style="width: 60px;">
             </div>
 
             <!-- Броня и структура -->
@@ -79,15 +79,15 @@
                 <div class="damage-inputs">
                     <div>
                         <label for="damageS">S (+0)</label>
-                        <input type="text" id="damageS" value="6" pattern="[0-9*]*" maxlength="3">
+                        <input type="text" id="damageS" value="0" pattern="[0-9*]*" maxlength="3">
                     </div>
                     <div>
                         <label for="damageM">M (+2)</label>
-                        <input type="text" id="damageM" value="6" pattern="[0-9*]*" maxlength="3">
+                        <input type="text" id="damageM" value="0" pattern="[0-9*]*" maxlength="3">
                     </div>
                     <div>
                         <label for="damageL">L (+4)</label>
-                        <input type="text" id="damageL" value="4" pattern="[0-9*]*" maxlength="3">
+                        <input type="text" id="damageL" value="0" pattern="[0-9*]*" maxlength="3">
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
             <!-- Перегрев -->
             <div class="input-group">
                 <label for="overheatValue">Перегрев (OV):</label>
-                <input type="number" id="overheatValue" value="3" min="0" max="5" style="width: 60px;">
+                <input type="number" id="overheatValue" value="0" min="0" max="99" style="width: 60px;">
             </div>
 
             <!-- Изображение -->
@@ -103,7 +103,7 @@
                 <!-- <label for="imageUrl">Ссылка на изображение:</label>-->
                 <input hidden type="text" id="imageUrl" placeholder="URL изображения">
                 
-                <label for="imageUpload">Выберите файл:</label>
+                <label for="imageUpload">Или выберите файл:</label>
                 <input type="file" id="imageUpload" accept="image/*">
                 
                 <div class="image-preview" id="imagePreview">
@@ -114,7 +114,7 @@
             <!-- Особые способности -->
             <div class="special-abilities-input">
                 <label for="specialAbilities">Особые способности:</label>
-                <input type="text" id="specialAbilities" value="CASE, OMNI, OVL">
+                <input type="text" id="specialAbilities" value="">
             </div>
 
             <!-- Кнопки -->
