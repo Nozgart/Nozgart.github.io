@@ -71,8 +71,8 @@ class CardGenerator {
         const autoUpdateFields = [
             this.unitName, this.unitVariant, this.unitType, this.unitSize,
             this.unitTMM, this.unitMove, this.unitRole, this.unitSkill,
-            this.unitPoints, this.armorValue, this.structureValue, 
-            this.damageS, this.damageM, this.damageL, this.overheatValue, 
+            this.unitPoints, this.armorValue, this.structureValue,
+            this.damageS, this.damageM, this.damageL, this.overheatValue,
             this.specialAbilities
         ];
 
@@ -177,7 +177,7 @@ class CardGenerator {
         let html = '';
         const maxPerRow = 20;
         const rows = Math.ceil(count / maxPerRow);
-        
+
         for (let row = 0; row < rows; row++) {
             const circlesInRow = Math.min(count - row * maxPerRow, maxPerRow);
             for (let i = 0; i < circlesInRow; i++) {
@@ -212,14 +212,14 @@ class CardGenerator {
         };
     }
 
-createCardHTML(data) {
-    const imageHTML = data.imageUrl ? `
+    createCardHTML(data) {
+        const imageHTML = data.imageUrl ? `
         <div class="card-image">
             <img src="${data.imageUrl}" alt="${data.name}">
         </div>
     ` : '<div class="card-image"></div>';
 
-    return `
+        return `
     <div class="alpha-strike-card" id="alphaStrikeCard">
         <div class="card-header">
             <div class="unit-name">${data.name}</div>
@@ -270,17 +270,20 @@ createCardHTML(data) {
             </div>
         </div>
         
-        <div class="defense-section">
+        <div class="armor-section">
             <div class="circle-group">
                 <div class="circles-container">
                     ${this.generateCircles(data.armor, 20, false)}
                 </div>
             </div>
+        </div>
+        <div class="structure-section">
             <div class="circle-group">
                 <div class="circles-container">
                     ${this.generateCircles(data.structure, 20, true)}
                 </div>
             </div>
+        </div>
         </div>
 
         <div class="special-abilities">
@@ -290,7 +293,7 @@ createCardHTML(data) {
         ${imageHTML}
     </div>
 `;
-}
+    }
 
     exportCard() {
         const cardElement = document.getElementById('alphaStrikeCard');

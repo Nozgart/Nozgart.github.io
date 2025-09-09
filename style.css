@@ -507,11 +507,20 @@ button:hover {
 }
 
 /* Броня и структура (левый нижний угол) */
-.defense-section {
+.armor-section {
     display: grid;
     height: 10px;
     position: absolute;
-    top: 320px;
+    top: 321px;
+    left: 45px;
+    width: 350px;
+}
+
+.structure-section {
+    display: grid;
+    height: 10px;
+    position: absolute;
+    top: 346px;
     left: 45px;
     width: 350px;
 }
