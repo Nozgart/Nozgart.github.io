@@ -335,7 +335,7 @@ createCardHTML(data) {
             useCORS: true // Важно для загрузки изображений с других доменов
         }).then(canvas => {
             const link = document.createElement('a');
-            link.download = `battletech-card-${this.unitName.value.toLowerCase().replace(/\s+/g, '-')}.png`;
+            link.download = `battletech-card-${this.unitVariant.value.toLowerCase().replace(/\s+/g, '-')}-${this.unitName.value.toLowerCase().replace(/\s+/g, '-')}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
