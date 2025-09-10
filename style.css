@@ -135,13 +135,6 @@ input[type="text"]::placeholder {
     font-size: 11px;
 }
 
-.circle-preview {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px;
-    width: 90px;
-}
-
 .circle {
     width: 8px;
     height: 8px;
@@ -304,7 +297,7 @@ button:hover {
     background: transparent !important;
 }
 
-.unit-name {
+.unit-variant {
     font-size: 30px;
     margin: 0;
     color: #eed204;
@@ -317,7 +310,7 @@ button:hover {
     width: 100%;
 }
 
-.unit-variant {
+.unit-name {
     font-size: 55px;
     font-weight: bold;
     margin: 1px 0;

@@ -2,7 +2,6 @@ class CardGenerator {
     constructor() {
         this.initializeElements();
         this.bindEvents();
-        this.updateCirclePreviews();
         this.currentImageUrl = null;
         this.generateCard();
     }
@@ -24,8 +23,6 @@ class CardGenerator {
         // Броня и структура
         this.armorValue = document.getElementById('armorValue');
         this.structureValue = document.getElementById('structureValue');
-        this.armorPreview = document.getElementById('armorPreview');
-        this.structurePreview = document.getElementById('structurePreview');
 
         // Урон
         this.damageS = document.getElementById('damageS');
@@ -54,10 +51,6 @@ class CardGenerator {
     bindEvents() {
         this.generateBtn.addEventListener('click', () => this.generateCard());
         this.exportBtn.addEventListener('click', () => this.exportCard());
-
-        // Обновление предпросмотра кружков
-        this.armorValue.addEventListener('input', () => this.updateCirclePreviews());
-        this.structureValue.addEventListener('input', () => this.updateCirclePreviews());
 
         // Обработка изображений
         this.imageUrl.addEventListener('change', () => this.handleImageUrlChange());
@@ -118,19 +111,19 @@ class CardGenerator {
             this.generateCard();
         };
         testImage.onerror = () => {
-            alert('Не удалось загрузить изображение по указанной ссылке');
+            alert('Failed to load image from the specified link');
             this.clearImagePreview();
         };
         testImage.src = url;
     }
 
     showImagePreview(url) {
-        this.imagePreview.innerHTML = `<img src="${url}" alt="Предпросмотр">`;
+        this.imagePreview.innerHTML = `<img src="${url}" alt="Preview">`;
     }
 
     clearImagePreview() {
         this.currentImageUrl = null;
-        this.imagePreview.innerHTML = '<span>Предпросмотр изображения</span>';
+        this.imagePreview.innerHTML = '<span>Image Preview</span>';
         this.generateCard();
     }
 
@@ -147,11 +140,6 @@ class CardGenerator {
                 container.appendChild(document.createElement('br'));
             }
         }
-    }
-
-    updateCirclePreviews() {
-        this.updateCirclePreview(this.armorValue.value, this.armorPreview, 20, false);
-        this.updateCirclePreview(this.structureValue.value, this.structurePreview, 20, true);
     }
 
     generateCard() {
@@ -298,7 +286,7 @@ class CardGenerator {
         const cardElement = document.getElementById('alphaStrikeCard');
 
         if (!cardElement) {
-            alert('Сначала сгенерируйте карточку!');
+            alert('Generate card first!');
             return;
         }
 

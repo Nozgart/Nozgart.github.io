@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Генератор карточек для BattleTech Alpha Strike">
-    <title>BattleTech Alpha Strike Card Generator</title>
+    <meta name="description" content="BattleTech Alpha Strike Color Card Generator">
+    <title>BattleTech Alpha Strike Color Card Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container">
-        <h1>Генератор карточек Alpha Strike</h1>
-        
+    <div class="app-container">        
         <!-- Панель управления -->
         <div class="controls">
             <!-- Основная информация -->
             <div class="input-group">
-                <label for="unitName">Название юнита:</label>
-                <input type="text" id="unitName" value="">
-                
-                <label for="unitVariant">Модификация:</label>
+                <label for="unitVariant">Model</label>
                 <input type="text" id="unitVariant" value="">
                 
-                <label for="unitRole">Роль:</label>
+                <label for="unitName">Name</label>
+                <input type="text" id="unitName" value="">
+                
+                <label for="unitRole">Role</label>
                 <input type="text" id="unitRole" value="" maxlength="20">
             </div>
 
@@ -51,21 +49,20 @@
 
             <!-- Очковая стоимость -->
             <div class="input-group">
-                <label for="unitPoints">Очковая стоимость (PV):</label>
+                <label for="unitPoints">PV</label>
                 <input type="number" id="unitPoints" value="11" min="0" max="100" style="width: 60px;">
             </div>
 
             <!-- Броня и структура -->
             <div class="circle-input-group">
                 <div class="circle-input">
-                    <label for="armorValue">Броня (A):</label>
+                    <label for="armorValue">Armor</label>
                     <div class="circle-input-row">
                         <input type="number" id="armorValue" value="5" min="0" max="20">
-                        <div class="circle-preview" id="armorPreview"></div>
                     </div>
                 </div>
                 <div class="circle-input">
-                    <label for="structureValue">Структура (S):</label>
+                    <label for="structureValue">Structure</label>
                     <div class="circle-input-row">
                         <input type="number" id="structureValue" value="5" min="0" max="20">
                         <div class="circle-preview" id="structurePreview"></div>
@@ -94,7 +91,7 @@
 
             <!-- Перегрев -->
             <div class="input-group">
-                <label for="overheatValue">Перегрев (OV):</label>
+                <label for="overheatValue">OV</label>
                 <input type="number" id="overheatValue" value="0" min="0" max="99" style="width: 60px;">
             </div>
 
@@ -103,30 +100,30 @@
                 <!-- <label for="imageUrl">Ссылка на изображение:</label>-->
                 <input hidden type="text" id="imageUrl" placeholder="URL изображения">
                 
-                <label for="imageUpload">Или выберите файл:</label>
+                <label for="imageUpload">Choose image</label>
                 <input type="file" id="imageUpload" accept="image/*">
                 
                 <div class="image-preview" id="imagePreview">
-                    <span>Предпросмотр изображения</span>
+                    <span>Image preview</span>
                 </div>
             </div>
 
             <!-- Особые способности -->
             <div class="special-abilities-input">
-                <label for="specialAbilities">Особые способности:</label>
+                <label for="specialAbilities">Special abilities</label>
                 <input type="text" id="specialAbilities" value="">
             </div>
 
             <!-- Кнопки -->
             <div class="button-group">
-                <button id="generateBtn">Сгенерировать</button>
-                <button id="exportBtn">Экспорт PNG</button>
+                <button id="generateBtn">Generate</button>
+                <button id="exportBtn">Export PNG</button>
             </div>
         </div>
 
         <!-- Область предпросмотра карточки -->
         <div class="preview">
-            <h2>Предпросмотр:</h2>
+            <h2>Preview</h2>
             <div id="cardContainer">
                 <!-- Сюда будет вставлена сгенерированная карточка -->
             </div>
