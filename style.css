@@ -268,7 +268,7 @@ button:hover {
 .alpha-strike-card {
     width: 700px;
     height: 500px;
-    background: url("data/cardBackground.png") center/cover no-repeat;
+    background: url("data/mechCardBackground.png") center/cover no-repeat;
     padding: 12px;
     color: #ffffff;
     position: relative;
@@ -277,6 +277,11 @@ button:hover {
     line-height: 1;
     border-radius: 8px;
     overflow: hidden;
+}
+
+.alpha-strike-card.infantry
+{
+     background: url("data/infantryCardBackground.png") center/cover no-repeat;
 }
 
 /* Поднимаем все элементы над overlay */
