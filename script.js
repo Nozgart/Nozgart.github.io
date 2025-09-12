@@ -154,7 +154,7 @@ class CardGenerator {
     }
 
     async generateCardfromMUL() {
-        const cardData = await getUnitDataFromMul(mulID.value);
+        const cardData = await getUnitDataFromMul(`https://masterunitlist.info/Tools/CustomCard/${mulID.value}`);
         const cardHTML = this.createCardHTML(cardData);
 
         this.cardContainer.innerHTML = cardHTML;
