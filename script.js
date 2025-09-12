@@ -39,10 +39,13 @@ class CardGenerator {
 
         // Способности
         this.specialAbilities = document.getElementById('specialAbilities');
+        // Mul ID
+        this.mulID = document.getElementById('mulID');
 
         // Кнопки
         this.generateBtn = document.getElementById('generateBtn');
         this.exportBtn = document.getElementById('exportBtn');
+        this.exportMul = document.getElementById('exportMul');
 
         // Контейнер
         this.cardContainer = document.getElementById('cardContainer');
@@ -51,6 +54,7 @@ class CardGenerator {
     bindEvents() {
         this.generateBtn.addEventListener('click', () => this.generateCard());
         this.exportBtn.addEventListener('click', () => this.exportCard());
+        this.exportMul.addEventListener('click', () => this.generateCardfromMUL());
 
         // Обработка изображений
         this.imageUrl.addEventListener('change', () => this.handleImageUrlChange());
@@ -144,6 +148,13 @@ class CardGenerator {
 
     generateCard() {
         const cardData = this.getCardData();
+        const cardHTML = this.createCardHTML(cardData);
+
+        this.cardContainer.innerHTML = cardHTML;
+    }
+
+    async generateCardfromMUL() {
+        const cardData = await getUnitDataFromMul(mulID.value);
         const cardHTML = this.createCardHTML(cardData);
 
         this.cardContainer.innerHTML = cardHTML;
@@ -329,6 +340,29 @@ class CardGenerator {
             link.href = canvas.toDataURL('image/png');
             link.click();
         });
+    }
+}
+
+async function fetchAndParseUnitData(unitId) {
+    try {
+        // Получаем HTML документ
+        const response = await fetch(`http://masterunitlist.info/Tools/CustomCard/${unitId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const htmlText = await response.text();
+        
+        // Создаем временный DOM для парсинга
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        
+        // Парсим данные из формы
+        return parseUnitDataFromDocument(doc);
+        
+    } catch (error) {
+        console.error('Error fetching or parsing unit data:', error);
+        return null;
     }
 }
 

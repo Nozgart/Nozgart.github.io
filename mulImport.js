@@ -21,6 +21,36 @@ async function fetchAndParseUnitData(unitId) {
     }
 }
 
+function getTmmFromMove(move) {
+    // Преобразуем входное значение в число
+    const numericPart = move.toString().replace(/[^\d]/g, '');
+    const moveValue = parseInt(numericPart, 10);
+    
+    // Проверяем, что значение является числом
+    if (isNaN(moveValue)) {
+        return 0;
+    }
+    
+    // Используем switch case для определения TMM
+    switch (true) {
+        case moveValue >= 0 && moveValue <= 4:
+            return 0;
+        case moveValue >= 5 && moveValue <= 8:
+            return 1;
+        case moveValue >= 9 && moveValue <= 12:
+            return 2;
+        case moveValue >= 13 && moveValue <= 18:
+            return 3;
+        case moveValue >= 19 && moveValue <= 34:
+            return 4;
+        case moveValue >= 35:
+            return 5;
+        default:
+            // Для значений больше 40 или отрицательных
+            return 0;
+    }
+}
+
 function parseUnitDataFromDocument(doc) {
     const form = doc.querySelector('.col-md-4.col-sm-6');
     if (!form) return null;
@@ -41,28 +71,29 @@ function parseUnitDataFromDocument(doc) {
     };
 
     return {
-        Name: getValue('Data_Name'),
-        Model: getValue('Data_Model'),
-        PV: getValue('Data_PV'),
-        Type: getValue('Data_Type'),
-        Size: getValue('Data_Size'),
-        Move: getValue('Data_Move'),
-        Role: getValue('Data_Role'),
-        Skill: getValue('Data_Skill'),
-        Short: getValue('Data_Short'),
-        ShortMin: getCheckboxValue('Data_ShortMin'),
-        Medium: getValue('Data_Medium'),
-        MediumMin: getCheckboxValue('Data_MediumMin'),
-        Long: getValue('Data_Long'),
-        LongMin: getCheckboxValue('Data_LongMin'),
-        Extreme: getValue('Data_Extreme'),
-        ExtremeMin: getCheckboxValue('Data_ExtremeMin'),
-        Overheat: getValue('Data_Overheat'),
-        Armor: getValue('Data_Armor'),
-        Structure: getValue('Data_Structure'),
-        Threshold: getValue('Data_Threshold'),
-        Specials: getTextareaValue('Data_Specials'),
-        Image: getTextareaValue('Data_Image')
+        name: getValue('Data_Name'),
+        variant: getValue('Data_Model'),
+        points: getValue('Data_PV'),
+        type: getValue('Data_Type'),
+        size: getValue('Data_Size'),
+        move: getValue('Data_Move'),
+        tmm: getTmmFromMove(getValue('Data_Move')),
+        role: getValue('Data_Role'),
+        skill: getValue('Data_Skill'),
+        damageS: getValue('Data_Short'),
+        //ShortMin: getCheckboxValue('Data_ShortMin'),
+        damageM: getValue('Data_Medium'),
+        //MediumMin: getCheckboxValue('Data_MediumMin'),
+        damageL: getValue('Data_Long'),
+        //LongMin: getCheckboxValue('Data_LongMin'),
+        //Extreme: getValue('Data_Extreme'),
+        //ExtremeMin: getCheckboxValue('Data_ExtremeMin'),
+        overheat: getValue('Data_Overheat'),
+        armor: getValue('Data_Armor'),
+        structure: getValue('Data_Structure'),
+        //Threshold: getValue('Data_Threshold'),
+        specialAbilities: getTextareaValue('Data_Specials'),
+        imageUrl: getTextareaValue('Data_Image')
     };
 }
 
@@ -72,7 +103,7 @@ function parseCurrentUnitData() {
 }
 
 // Использование
-async function getUnitData(unitId) {
+async function getUnitDataFromMul(unitId) {
     const unitData = await fetchAndParseUnitData(unitId);
     console.log(JSON.stringify(unitData, null, 2));
     return unitData;
