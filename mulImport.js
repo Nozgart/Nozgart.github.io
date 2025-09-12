@@ -1,7 +1,7 @@
 async function fetchAndParseUnitData(unitId) {
     try {
         // Получаем HTML документ
-        const response = await fetch(unitId);
+        const response = await fetch(`https://masterunitlist.info/Tools/CustomCard/${unitId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -46,7 +46,6 @@ function getTmmFromMove(move) {
         case moveValue >= 35:
             return 5;
         default:
-            // Для значений больше 40 или отрицательных
             return 0;
     }
 }
@@ -62,7 +61,7 @@ function parseUnitDataFromDocument(doc) {
 
     const getCheckboxValue = (id) => {
         const element = form.querySelector(`#${id}`);
-        return element ? element.checked : false;
+        return element.checked ? "*" : "";
     };
 
     const getTextareaValue = (id) => {
@@ -80,12 +79,9 @@ function parseUnitDataFromDocument(doc) {
         tmm: getTmmFromMove(getValue('Data_Move')),
         role: getValue('Data_Role'),
         skill: getValue('Data_Skill'),
-        damageS: getValue('Data_Short'),
-        //ShortMin: getCheckboxValue('Data_ShortMin'),
-        damageM: getValue('Data_Medium'),
-        //MediumMin: getCheckboxValue('Data_MediumMin'),
-        damageL: getValue('Data_Long'),
-        //LongMin: getCheckboxValue('Data_LongMin'),
+        damageS: getValue('Data_Short') + getCheckboxValue('Data_ShortMin'),
+        damageM: getValue('Data_Medium') + getCheckboxValue('Data_MediumMin'),
+        damageL: getValue('Data_Long') + getCheckboxValue('Data_LongMin'),
         //Extreme: getValue('Data_Extreme'),
         //ExtremeMin: getCheckboxValue('Data_ExtremeMin'),
         overheat: getValue('Data_Overheat'),

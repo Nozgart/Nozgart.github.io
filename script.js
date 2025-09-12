@@ -12,7 +12,6 @@ class CardGenerator {
         this.unitVariant = document.getElementById('unitVariant');
         this.unitType = document.getElementById('unitType');
         this.unitSize = document.getElementById('unitSize');
-        this.unitTMM = document.getElementById('unitTMM');
         this.unitMove = document.getElementById('unitMove');
         this.unitRole = document.getElementById('unitRole');
         this.unitSkill = document.getElementById('unitSkill');
@@ -66,8 +65,8 @@ class CardGenerator {
 
     bindAutoUpdate() {
         const autoUpdateFields = [
-            this.unitName, this.unitVariant, this.unitType, this.unitSize,
-            this.unitTMM, this.unitMove, this.unitRole, this.unitSkill,
+            this.unitName, this.unitVariant, this.unitType, this.unitSize, 
+            this.unitMove, this.unitRole, this.unitSkill,
             this.unitPoints, this.armorValue, this.structureValue,
             this.damageS, this.damageM, this.damageL, this.overheatValue,
             this.specialAbilities
@@ -84,6 +83,7 @@ class CardGenerator {
 
     handleImageUrlChange() {
         const url = this.imageUrl.value.trim();
+        console.info(url);
         if (url) {
             this.loadImageFromUrl(url);
         } else {
@@ -130,31 +130,32 @@ class CardGenerator {
         this.imagePreview.innerHTML = '<span>Image Preview</span>';
         this.generateCard();
     }
+    
+    async generateCardfromMUL() {
+        const cardData = await getUnitDataFromMul(mulID.value);
+        
+        document.getElementById('unitName').value = cardData.name;
+        document.getElementById('unitVariant').value = cardData.variant;
+        document.getElementById('unitType').value = cardData.type;
+        document.getElementById('unitSize').value = cardData.size;
+        document.getElementById('unitMove').value = cardData.move;
+        document.getElementById('unitRole').value = cardData.role;
+        document.getElementById('unitSkill').value = cardData.skill;
+        document.getElementById('unitPoints').value = cardData.points;
+        document.getElementById('armorValue').value = cardData.armor;
+        document.getElementById('structureValue').value = cardData.structure;
+        document.getElementById('damageS').value = cardData.damageS;
+        document.getElementById('damageM').value = cardData.damageM;
+        document.getElementById('damageL').value = cardData.damageL;
+        document.getElementById('overheatValue').value = cardData.overheat;
+        document.getElementById('imageUrl').value = cardData.imageUrl;
+        document.getElementById('specialAbilities').value = cardData.specialAbilities;
 
-    updateCirclePreview(value, container, maxCircles, isStructure = false) {
-        const count = parseInt(value) || 0;
-        container.innerHTML = '';
-
-        for (let i = 0; i < count; i++) {
-            const circle = document.createElement('div');
-            circle.className = `circle ${isStructure ? 'structure' : ''}`;
-            container.appendChild(circle);
-
-            if ((i + 1) % 10 === 0 && i < count - 1) {
-                container.appendChild(document.createElement('br'));
-            }
-        }
+        this.handleImageUrlChange();
     }
 
     generateCard() {
         const cardData = this.getCardData();
-        const cardHTML = this.createCardHTML(cardData);
-
-        this.cardContainer.innerHTML = cardHTML;
-    }
-
-    async generateCardfromMUL() {
-        const cardData = await getUnitDataFromMul(`https://masterunitlist.info/Tools/CustomCard/${mulID.value}`);
         const cardHTML = this.createCardHTML(cardData);
 
         this.cardContainer.innerHTML = cardHTML;
@@ -195,7 +196,7 @@ class CardGenerator {
             variant: this.unitVariant.value,
             type: this.unitType.value,
             size: this.unitSize.value,
-            tmm: this.unitTMM.value,
+            tmm: getTmmFromMove(this.unitMove.value),
             move: this.unitMove.value,
             role: this.unitRole.value,
             skill: this.unitSkill.value,

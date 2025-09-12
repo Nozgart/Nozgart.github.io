@@ -573,7 +573,7 @@ button:hover {
     top: 383px;
     left: 130px;
     width: 250px;
-    height: 35px;
+    height: 40px;
 }
 
 .abilities-value {
@@ -582,6 +582,10 @@ button:hover {
     line-height: 1.1;
     font-weight: bold;
     text-align: left;
+    word-wrap: break-word;      
+    overflow-wrap: break-word;  
+    white-space: normal;        
+    hyphens: auto;              
 }
 
 /* Очковая стоимость в правом верхнем углу */
