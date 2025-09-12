@@ -346,7 +346,7 @@ class CardGenerator {
 async function fetchAndParseUnitData(unitId) {
     try {
         // Получаем HTML документ
-        const response = await fetch(`http://masterunitlist.info/Tools/CustomCard/${unitId}`);
+        const response = await fetch(`https://masterunitlist.info/Tools/CustomCard/${unitId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
