@@ -343,29 +343,6 @@ class CardGenerator {
     }
 }
 
-async function fetchAndParseUnitData(unitId) {
-    try {
-        // Получаем HTML документ
-        const response = await fetch(`https://masterunitlist.info/Tools/CustomCard/${unitId}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const htmlText = await response.text();
-        
-        // Создаем временный DOM для парсинга
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, 'text/html');
-        
-        // Парсим данные из формы
-        return parseUnitDataFromDocument(doc);
-        
-    } catch (error) {
-        console.error('Error fetching or parsing unit data:', error);
-        return null;
-    }
-}
-
 // Инициализация приложения после загрузки DOM
 document.addEventListener('DOMContentLoaded', () => {
     const generator = new CardGenerator();
