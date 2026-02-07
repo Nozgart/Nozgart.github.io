@@ -198,8 +198,20 @@ class CardGenerator {
     }
     
     async generateCardfromMUL() {
-        const cardData = await getUnitDataFromMul(mulID.value);
-        
+        const id = (mulID && mulID.value && String(mulID.value).trim()) || '';
+        if (!id) {
+            alert('Введите MUL ID (число) в поле Mul ID.');
+            return;
+        }
+        const cardData = await getUnitDataFromMul(id);
+        if (!cardData) {
+            alert(
+                'Не удалось загрузить данные с Master Unit List.\n\n' +
+                '• Проверьте правильность MUL ID.\n' +
+                '• Браузер может блокировать запрос к MUL. Разрешите переход на masterunitlist.info (в предупреждении о сертификате или в настройках) — после этого кнопка должна подгружать данные.'
+            );
+            return;
+        }
         document.getElementById('unitName').value = cardData.name;
         document.getElementById('unitVariant').value = cardData.variant;
         // TP: BM/BA или «Другое» + своё значение
