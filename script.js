@@ -1,3 +1,66 @@
+/**
+ * Модификатор PV за один шаг при УМЕНЬШЕНИИ скилла (skill < 4).
+ * Таблица: базовая стоимость → сколько очков добавляем за каждый шаг вниз от 4.
+ */
+function getPVModifierPerStep(basePV) {
+    const pv = parseInt(basePV, 10) || 0;
+    if (pv <= 7) return 1;
+    if (pv <= 12) return 2;
+    if (pv <= 17) return 3;
+    if (pv <= 22) return 4;
+    if (pv <= 27) return 5;
+    if (pv <= 32) return 6;
+    if (pv <= 37) return 7;
+    if (pv <= 42) return 8;
+    if (pv <= 47) return 9;
+    if (pv <= 52) return 10;
+    return 10 + Math.floor((pv - 48) / 5);
+}
+
+/**
+ * Снижение PV за один шаг при УВЕЛИЧЕНИИ скилла (skill > 4).
+ * Таблица: базовая стоимость → на сколько очков уменьшаем за каждый шаг вверх от 4.
+ */
+function getPVReductionPerStep(basePV) {
+    const pv = parseInt(basePV, 10) || 0;
+    if (pv <= 14) return 1;
+    if (pv <= 24) return 2;
+    if (pv <= 34) return 3;
+    if (pv <= 44) return 4;
+    if (pv <= 54) return 5;
+    if (pv <= 64) return 6;
+    if (pv <= 74) return 7;
+    if (pv <= 84) return 8;
+    if (pv <= 94) return 9;
+    if (pv <= 104) return 10;
+    return 10 + Math.floor((pv - 95) / 10);
+}
+
+/**
+ * Отображаемая очковая стоимость: базовая PV (при скилле 4) + поправка за скилл.
+ * Скилл 4 = базовая стоимость.
+ * Скилл < 4 — дороже (таблица увеличения).
+ * Скилл > 4 — дешевле (отдельная таблица снижения).
+ */
+function getDisplayPV(basePV, skill) {
+    const base = parseInt(basePV, 10) || 0;
+    let sk = parseInt(skill, 10);
+    if (isNaN(sk)) return base;
+    sk = Math.max(0, Math.min(7, sk));
+    if (sk === 4) return base;
+    let displayed;
+    if (sk < 4) {
+        const stepsDown = 4 - sk;
+        const modifier = getPVModifierPerStep(base);
+        displayed = base + stepsDown * modifier;
+    } else {
+        const stepsUp = sk - 4;
+        const reduction = getPVReductionPerStep(base);
+        displayed = base - stepsUp * reduction;
+    }
+    return Math.max(0, Math.round(displayed));
+}
+
 class CardGenerator {
     constructor() {
         this.initializeElements();
@@ -183,7 +246,8 @@ class CardGenerator {
             roleCustom.style.display = 'block';
             roleCustom.value = cardData.role || '';
         }
-        document.getElementById('unitSkill').value = cardData.skill;
+        const skillVal = cardData.skill;
+        document.getElementById('unitSkill').value = Math.max(0, Math.min(7, parseInt(skillVal, 10) || 4));
         document.getElementById('unitPoints').value = cardData.points;
         document.getElementById('armorValue').value = cardData.armor;
         document.getElementById('structureValue').value = cardData.structure;
@@ -237,6 +301,9 @@ class CardGenerator {
     getCardData() {
         const type = this.unitTypeSelect.value === '__other__' ? this.unitTypeCustom.value : this.unitTypeSelect.value;
         const role = this.unitRoleSelect.value === '__other__' ? this.unitRoleCustom.value : this.unitRoleSelect.value;
+        const basePV = parseInt(this.unitPoints.value, 10) || 0;
+        const skill = this.unitSkill.value;
+        const points = getDisplayPV(basePV, skill);
         return {
             name: this.unitName.value,
             variant: this.unitVariant.value,
@@ -245,8 +312,8 @@ class CardGenerator {
             tmm: getTmmFromMove(this.unitMove.value),
             move: this.unitMove.value,
             role: role,
-            skill: this.unitSkill.value,
-            points: parseInt(this.unitPoints.value) || 0,
+            skill: skill,
+            points: points,
             armor: parseInt(this.armorValue.value) || 0,
             structure: parseInt(this.structureValue.value) || 0,
             damageS: this.damageS.value,
