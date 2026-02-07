@@ -1,39 +1,22 @@
 /**
  * Модификатор PV за один шаг при УМЕНЬШЕНИИ скилла (skill < 4).
- * Таблица: базовая стоимость → сколько очков добавляем за каждый шаг вниз от 4.
+ * 0–7 → 1; 8–12 → 2; далее +1 за каждые 5 очков; с 48 — база 10, +1 за каждые 5.
  */
 function getPVModifierPerStep(basePV) {
-    const pv = parseInt(basePV, 10) || 0;
+    const pv = Math.max(0, parseInt(basePV, 10) || 0);
     if (pv <= 7) return 1;
-    if (pv <= 12) return 2;
-    if (pv <= 17) return 3;
-    if (pv <= 22) return 4;
-    if (pv <= 27) return 5;
-    if (pv <= 32) return 6;
-    if (pv <= 37) return 7;
-    if (pv <= 42) return 8;
-    if (pv <= 47) return 9;
-    if (pv <= 52) return 10;
+    if (pv < 48) return 2 + Math.floor((pv - 8) / 5);
     return 10 + Math.floor((pv - 48) / 5);
 }
 
 /**
  * Снижение PV за один шаг при УВЕЛИЧЕНИИ скилла (skill > 4).
- * Таблица: базовая стоимость → на сколько очков уменьшаем за каждый шаг вверх от 4.
+ * 0–14 → 1; 15–24 → 2; далее +1 за каждые 10 очков.
  */
 function getPVReductionPerStep(basePV) {
-    const pv = parseInt(basePV, 10) || 0;
+    const pv = Math.max(0, parseInt(basePV, 10) || 0);
     if (pv <= 14) return 1;
-    if (pv <= 24) return 2;
-    if (pv <= 34) return 3;
-    if (pv <= 44) return 4;
-    if (pv <= 54) return 5;
-    if (pv <= 64) return 6;
-    if (pv <= 74) return 7;
-    if (pv <= 84) return 8;
-    if (pv <= 94) return 9;
-    if (pv <= 104) return 10;
-    return 10 + Math.floor((pv - 95) / 10);
+    return 1 + Math.floor((pv - 5) / 10);
 }
 
 /**
