@@ -63,7 +63,8 @@ label {
 input[type="text"],
 input[type="number"],
 input[type="file"],
-textarea {
+textarea,
+select {
     width: 100%;
     padding: 6px 8px;
     border: 1px solid #4a5c6c;
@@ -75,6 +76,15 @@ textarea {
     box-sizing: border-box;
     font-size: 13px;
     height: 30px;
+}
+
+select {
+    cursor: pointer;
+    appearance: auto;
+}
+
+.custom-value-input {
+    margin-top: 4px;
 }
 
 input[type="text"]::placeholder {
@@ -367,22 +377,22 @@ button:hover {
 }
 
 .alpha-strike-card.infantry .special-abilities {
-    top: 385px;
+    top: 383px;
     left: 130px;
     width: 250px;
     height: 40px;
 }
 
 .alpha-strike-card.infantry .abilities-value {
-    font-size: 16px;
-    line-height: 1.2;
+    font-size: 20px;
+    line-height: 1.1;
 }
 
 /* Очковая стоимость (PV) — правый верхний угол на шаблоне */
 .alpha-strike-card.infantry .points-badge {
-    top: 8px;
-    right: 38px;
-    font-size: 36px;
+    top: 4px;
+    right: 40px;
+    font-size: 40px;
 }
 
 /* Поднимаем все элементы над overlay */

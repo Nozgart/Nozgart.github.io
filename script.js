@@ -10,10 +10,12 @@ class CardGenerator {
         // Основные поля
         this.unitName = document.getElementById('unitName');
         this.unitVariant = document.getElementById('unitVariant');
-        this.unitType = document.getElementById('unitType');
+        this.unitTypeSelect = document.getElementById('unitTypeSelect');
+        this.unitTypeCustom = document.getElementById('unitTypeCustom');
         this.unitSize = document.getElementById('unitSize');
         this.unitMove = document.getElementById('unitMove');
-        this.unitRole = document.getElementById('unitRole');
+        this.unitRoleSelect = document.getElementById('unitRoleSelect');
+        this.unitRoleCustom = document.getElementById('unitRoleCustom');
         this.unitSkill = document.getElementById('unitSkill');
 
         // Очковая стоимость
@@ -59,14 +61,33 @@ class CardGenerator {
         this.imageUrl.addEventListener('change', () => this.handleImageUrlChange());
         this.imageUpload.addEventListener('change', (e) => this.handleImageUpload(e));
 
+        // TP: показ поля «Другое»
+        this.unitTypeSelect.addEventListener('change', () => {
+            const isOther = this.unitTypeSelect.value === '__other__';
+            this.unitTypeCustom.style.display = isOther ? 'block' : 'none';
+            if (!isOther) this.unitTypeCustom.value = '';
+            this.generateCard();
+        });
+        this.unitTypeCustom.addEventListener('input', () => this.generateCard());
+
+        // Role: показ поля «Другое»
+        this.unitRoleSelect.addEventListener('change', () => {
+            const isOther = this.unitRoleSelect.value === '__other__';
+            this.unitRoleCustom.style.display = isOther ? 'block' : 'none';
+            if (!isOther) this.unitRoleCustom.value = '';
+            this.generateCard();
+        });
+        this.unitRoleCustom.addEventListener('input', () => this.generateCard());
+
         // Авто-обновление карточки при изменении полей
         this.bindAutoUpdate();
     }
 
     bindAutoUpdate() {
         const autoUpdateFields = [
-            this.unitName, this.unitVariant, this.unitType, this.unitSize, 
-            this.unitMove, this.unitRole, this.unitSkill,
+            this.unitName, this.unitVariant, this.unitTypeSelect, this.unitTypeCustom,
+            this.unitSize, this.unitMove, this.unitRoleSelect, this.unitRoleCustom,
+            this.unitSkill,
             this.unitPoints, this.armorValue, this.structureValue,
             this.damageS, this.damageM, this.damageL, this.overheatValue,
             this.specialAbilities
@@ -74,9 +95,8 @@ class CardGenerator {
 
         autoUpdateFields.forEach(field => {
             if (field) {
-                field.addEventListener('input', () => {
-                    this.generateCard();
-                });
+                field.addEventListener('input', () => this.generateCard());
+                field.addEventListener('change', () => this.generateCard());
             }
         });
     }
@@ -136,10 +156,33 @@ class CardGenerator {
         
         document.getElementById('unitName').value = cardData.name;
         document.getElementById('unitVariant').value = cardData.variant;
-        document.getElementById('unitType').value = cardData.type;
+        // TP: BM/BA или «Другое» + своё значение
+        const typeSelect = document.getElementById('unitTypeSelect');
+        const typeCustom = document.getElementById('unitTypeCustom');
+        if (cardData.type === 'BM' || cardData.type === 'BA') {
+            typeSelect.value = cardData.type;
+            typeCustom.style.display = 'none';
+            typeCustom.value = '';
+        } else {
+            typeSelect.value = '__other__';
+            typeCustom.style.display = 'block';
+            typeCustom.value = cardData.type || '';
+        }
         document.getElementById('unitSize').value = cardData.size;
         document.getElementById('unitMove').value = cardData.move;
-        document.getElementById('unitRole').value = cardData.role;
+        // Role: из списка или «Другое»
+        const roleSelect = document.getElementById('unitRoleSelect');
+        const roleCustom = document.getElementById('unitRoleCustom');
+        const roleOptions = ['Attack','Brawler','Dogfighter','Fast Dogfighter','Fire-Support','Interceptor','Juggernaut','Missile Boat','None','Scout','Skirmisher','Sniper','Striker','Transport'];
+        if (roleOptions.includes(cardData.role)) {
+            roleSelect.value = cardData.role;
+            roleCustom.style.display = 'none';
+            roleCustom.value = '';
+        } else {
+            roleSelect.value = '__other__';
+            roleCustom.style.display = 'block';
+            roleCustom.value = cardData.role || '';
+        }
         document.getElementById('unitSkill').value = cardData.skill;
         document.getElementById('unitPoints').value = cardData.points;
         document.getElementById('armorValue').value = cardData.armor;
@@ -152,6 +195,7 @@ class CardGenerator {
         document.getElementById('specialAbilities').value = cardData.specialAbilities;
 
         this.handleImageUrlChange();
+        this.generateCard();
     }
 
     generateCard() {
@@ -191,14 +235,16 @@ class CardGenerator {
     }
 
     getCardData() {
+        const type = this.unitTypeSelect.value === '__other__' ? this.unitTypeCustom.value : this.unitTypeSelect.value;
+        const role = this.unitRoleSelect.value === '__other__' ? this.unitRoleCustom.value : this.unitRoleSelect.value;
         return {
             name: this.unitName.value,
             variant: this.unitVariant.value,
-            type: this.unitType.value,
+            type: type,
             size: this.unitSize.value,
             tmm: getTmmFromMove(this.unitMove.value),
             move: this.unitMove.value,
-            role: this.unitRole.value,
+            role: role,
             skill: this.unitSkill.value,
             points: parseInt(this.unitPoints.value) || 0,
             armor: parseInt(this.armorValue.value) || 0,

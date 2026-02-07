@@ -20,31 +20,38 @@
                 <label for="unitName">Name</label>
                 <input type="text" id="unitName" value="">
                 
-                <label for="unitRole">Role</label>
-                <input type="text" id="unitRole" list="roleList" value="" maxlength="30" placeholder="Выберите или введите свою роль">
-                <datalist id="roleList">
-                    <option value="Attack">
-                    <option value="Brawler">
-                    <option value="Dogfighter">
-                    <option value="Fast Dogfighter">
-                    <option value="Fire-Support">
-                    <option value="Interceptor">
-                    <option value="Juggernaut">
-                    <option value="Missile Boat">
-                    <option value="None">
-                    <option value="Scout">
-                    <option value="Skirmisher">
-                    <option value="Sniper">
-                    <option value="Striker">
-                    <option value="Transport">
-                </datalist>
+                <label for="unitRoleSelect">Role</label>
+                <select id="unitRoleSelect">
+                    <option value="">—</option>
+                    <option value="Attack">Attack</option>
+                    <option value="Brawler">Brawler</option>
+                    <option value="Dogfighter">Dogfighter</option>
+                    <option value="Fast Dogfighter">Fast Dogfighter</option>
+                    <option value="Fire-Support">Fire-Support</option>
+                    <option value="Interceptor">Interceptor</option>
+                    <option value="Juggernaut">Juggernaut</option>
+                    <option value="Missile Boat">Missile Boat</option>
+                    <option value="None">None</option>
+                    <option value="Scout">Scout</option>
+                    <option value="Skirmisher">Skirmisher</option>
+                    <option value="Sniper">Sniper</option>
+                    <option value="Striker">Striker</option>
+                    <option value="Transport">Transport</option>
+                    <option value="__other__">Custom</option>
+                </select>
+                <input type="text" id="unitRoleCustom" class="custom-value-input" placeholder="Custom role" maxlength="30" style="display:none;">
             </div>
 
             <!-- Компактная группа характеристик -->
             <div class="compact-input-group">
                 <div>
-                    <label for="unitType">TP</label>
-                    <input type="text" id="unitType" value="BM" maxlength="3">
+                    <label for="unitTypeSelect">TP</label>
+                    <select id="unitTypeSelect">
+                        <option value="BM">BM</option>
+                        <option value="BA">BA</option>
+                        <option value="__other__">Custom</option>
+                    </select>
+                    <input type="text" id="unitTypeCustom" class="custom-value-input" placeholder="Custom type" maxlength="8" style="display:none;">
                 </div>
                 <div>
                     <label for="unitSize">SZ</label>
