@@ -514,12 +514,56 @@ class CardGenerator {
         }
     }
 
+    /**
+     * Применяет к контексту canvas эффект иконки эпохи (белая или тёмная).
+     * html2canvas не сохраняет CSS filter при экспорте, поэтому подменяем картинки в onclone.
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {number} w
+     * @param {number} h
+     * @param {boolean} available — true = белая (available), false = тёмная (как в CSS)
+     */
+    applyEraIconFilterToContext(ctx, w, h, available) {
+        const imageData = ctx.getImageData(0, 0, w, h);
+        const data = imageData.data;
+        const value = available ? Math.round(255 * 0.85) : Math.round(255 * 0.15); // белая 217 / тёмная 38
+        for (let i = 0; i < data.length; i += 4) {
+            if (data[i + 3] > 0) {
+                data[i] = value;
+                data[i + 1] = value;
+                data[i + 2] = value;
+            }
+        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+
     exportCardToImage(cardElement) {
-        html2canvas(cardElement, {
+        const originalCard = cardElement;
+        const generator = this;
+        html2canvas(originalCard, {
             backgroundColor: null,
             scale: 3,
             logging: false,
-            useCORS: true // Важно для загрузки изображений с других доменов
+            useCORS: true,
+            onclone(clonedDoc, clonedElement) {
+                const clonedCard = clonedDoc.getElementById('alphaStrikeCard') || clonedElement;
+                const originalEraIcons = originalCard.querySelectorAll('img.card-era-icon');
+                const clonedEraIcons = clonedCard.querySelectorAll('img.card-era-icon');
+                originalEraIcons.forEach((origImg, index) => {
+                    const cloneImg = clonedEraIcons[index];
+                    if (!cloneImg || !origImg.complete) return;
+                    const w = origImg.naturalWidth || origImg.width;
+                    const h = origImg.naturalHeight || origImg.height;
+                    if (!w || !h) return;
+                    const canvas = clonedDoc.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(origImg, 0, 0);
+                    const available = origImg.classList.contains('card-era-available');
+                    generator.applyEraIconFilterToContext(ctx, w, h, available);
+                    cloneImg.src = canvas.toDataURL('image/png');
+                });
+            }
         }).then(canvas => {
             const link = document.createElement('a');
             link.download = `battletech-card-${this.unitVariant.value.toLowerCase().replace(/\s+/g, '-')}-${this.unitName.value.toLowerCase().replace(/\s+/g, '-')}.png`;
