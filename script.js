@@ -212,15 +212,33 @@ class CardGenerator {
         };
     }
 
+    isInfantryCard(type) {
+        const t = (type || '').toString().trim().toUpperCase();
+        return t === 'BA';
+    }
+
     createCardHTML(data) {
+        const isInfantry = this.isInfantryCard(data.type);
+        const cardClass = 'alpha-strike-card' + (isInfantry ? ' infantry' : '');
+
         const imageHTML = data.imageUrl ? `
         <div class="card-image">
             <img src="${data.imageUrl}" alt="${data.name}">
         </div>
     ` : '<div class="card-image"></div>';
 
+        const heatSectionHTML = isInfantry ? '' : `
+        <div class="heat-section">
+            <div class="heat-content">
+                <div class="heat-item">
+                    <div class="heat-value">${data.overheat}</div>
+                </div> 
+            </div>
+        </div>
+        `;
+
         return `
-    <div class="alpha-strike-card" id="alphaStrikeCard">
+    <div class="${cardClass}" id="alphaStrikeCard">
         <div class="card-header">
             <div class="unit-name">${data.name}</div>
             <div class="unit-variant">${data.variant}</div>
@@ -261,15 +279,7 @@ class CardGenerator {
                 </div>
             </div>
         </div>
-        
-        <div class="heat-section">
-            <div class="heat-content">
-                <div class="heat-item">
-                    <div class="heat-value">${data.overheat}</div>
-                </div> 
-            </div>
-        </div>
-        
+        ${heatSectionHTML}
         <div class="armor-section">
             <div class="circle-group">
                 <div class="circles-container">

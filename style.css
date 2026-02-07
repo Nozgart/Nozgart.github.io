@@ -279,9 +279,110 @@ button:hover {
     overflow: hidden;
 }
 
-.alpha-strike-card.infantry
-{
-     background: url("data/infantryCardBackground.png") center/cover no-repeat;
+/* Карточка Battle Armor (BA) — другой фон и вёрстка под infantryCardBackground */
+.alpha-strike-card.infantry {
+    background: url("data/infantryCardBackground.png") center/cover no-repeat;
+}
+
+.alpha-strike-card.infantry .heat-section {
+    display: none;
+}
+
+/* BA: блок статистики — в серую панель с TP/SZ/TMM/MV/ROLE/SKILL */
+.alpha-strike-card.infantry .unit-stats {
+    top: 107px;
+    left: 20px;
+    width: 360px;
+}
+
+.alpha-strike-card.infantry .stat-item.tp {
+    top: 54px;
+    left: 35px;
+    width: 40px;
+}
+
+.alpha-strike-card.infantry .stat-item.sz {
+    top: 54px;
+    left: 122px;
+    width: 40px;
+}
+
+.alpha-strike-card.infantry .stat-item.tmm {
+    top: 54px;
+    left: 217px;
+    width: 40px;
+}
+
+.alpha-strike-card.infantry .stat-item.mv {
+    top: 54px;
+    left: 315px;
+    width: 40px;
+}
+
+.alpha-strike-card.infantry .stat-item.role {
+    top: 80px;
+    left: 63px;
+    width: 150px;
+}
+
+.alpha-strike-card.infantry .stat-item.skill {
+    top: 77px;
+    left: 335px;
+    width: 40px;
+}
+
+.alpha-strike-card.infantry .stat-value {
+    font-size: 20px;
+}
+
+/* BA: блок урона — цифры в полоску S (+0), M (+2), L (+4) */
+.alpha-strike-card.infantry .damage-section {
+    top: 267px;
+    left: 20px;
+    width: 120px;
+    height: 65px;
+    padding: 6px;
+}
+
+.alpha-strike-card.infantry .damage-values {
+    gap: 3px;
+}
+
+.alpha-strike-card.infantry .damage-value {
+    min-width: 130px;
+    font-size: 20px;
+    height: 25px;
+    line-height: 25px;
+}
+
+/* Броня (A:) и структура (S:) — как у меха по вертикали, без блока тепла */
+.alpha-strike-card.infantry .armor-section {
+    top: 321px;
+    left: 45px;
+}
+
+.alpha-strike-card.infantry .structure-section {
+    top: 346px;
+    left: 45px;
+}
+
+.alpha-strike-card.infantry .special-abilities {
+    top: 385px;
+    left: 130px;
+    width: 250px;
+    height: 40px;
+}
+
+.alpha-strike-card.infantry .abilities-value {
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+/* Очковая стоимость (PV) — правый верхний угол на шаблоне */
+.alpha-strike-card.infantry .points-badge {
+    top: 8px;
+    right: 38px;
+    font-size: 36px;
 }
 
 /* Поднимаем все элементы над overlay */
