@@ -200,7 +200,7 @@ class CardGenerator {
     async generateCardfromMUL() {
         const id = (mulID && mulID.value && String(mulID.value).trim()) || '';
         if (!id) {
-            alert('Введите MUL ID (число) в поле Mul ID.');
+            alert('Enter the MUL ID (number) in the Mul ID field.');
             return;
         }
         const overlay = document.getElementById('mulLoadingOverlay');
@@ -212,9 +212,9 @@ class CardGenerator {
             const cardData = await getUnitDataFromMul(id);
             if (!cardData) {
                 alert(
-                    'Не удалось загрузить данные с Master Unit List.\n\n' +
-                    '• Проверьте правильность MUL ID.\n' +
-                    '• Браузер может блокировать запрос к MUL. Разрешите переход на masterunitlist.info (в предупреждении о сертификате или в настройках) — после этого кнопка должна подгружать данные.'
+                    'Failed to load data from Master Unit List.\n\n' +
+                    '• Check that the MUL ID is correct.\n' +
+                    '• The browser may be blocking the request to MUL. Allow access to masterunitlist.info (in the certificate warning or in settings) — the button should then load data.'
                 );
                 return;
             }
