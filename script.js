@@ -220,10 +220,11 @@ class CardGenerator {
             }
             document.getElementById('unitName').value = cardData.name;
         document.getElementById('unitVariant').value = cardData.variant;
-        // TP: BM/BA/CI или «Другое» + своё значение
+        // TP: BM/IM/PM/BA/CI или «Другое» + своё значение
         const typeSelect = document.getElementById('unitTypeSelect');
         const typeCustom = document.getElementById('unitTypeCustom');
-        if (cardData.type === 'BM' || cardData.type === 'BA' || cardData.type === 'CI') {
+        const knownTypes = ['BM', 'IM', 'PM', 'BA', 'CI'];
+        if (knownTypes.includes(cardData.type)) {
             typeSelect.value = cardData.type;
             typeCustom.style.display = 'none';
             typeCustom.value = '';
@@ -356,7 +357,8 @@ class CardGenerator {
 
     isInfantryCard(type) {
         const t = (type || '').toString().trim().toUpperCase();
-        return t !== 'BM';
+        const mechTypes = ['BM', 'IM', 'PM'];
+        return !mechTypes.includes(t);
     }
 
     createCardHTML(data) {
