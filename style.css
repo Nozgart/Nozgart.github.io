@@ -427,6 +427,14 @@ button:hover {
     font-size: 40px;
 }
 
+/* BA: изображение юнита ниже и крупнее */
+.alpha-strike-card.infantry .card-image {
+    top: 115px;
+    right: -8px;
+    width: 320px;
+    height: 320px;
+}
+
 /* Поднимаем все элементы над overlay */
 .card-header,
 .card-stats,
