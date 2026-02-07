@@ -274,6 +274,28 @@ class CardGenerator {
         const cardHTML = this.createCardHTML(cardData);
 
         this.cardContainer.innerHTML = cardHTML;
+        requestAnimationFrame(() => this.scaleSpecialAbilitiesFont());
+    }
+
+    /** Уменьшает шрифт в блоке SPECIAL, если текст не помещается. */
+    scaleSpecialAbilitiesFont() {
+        const card = document.getElementById('alphaStrikeCard');
+        if (!card) return;
+        const container = card.querySelector('.special-abilities');
+        const textEl = card.querySelector('.abilities-value');
+        if (!container || !textEl) return;
+
+        const maxFontSize = 20;
+        const minFontSize = 10;
+        let fontSize = maxFontSize;
+
+        textEl.style.fontSize = `${fontSize}px`;
+        while (fontSize > minFontSize) {
+            const overflows = textEl.scrollHeight > container.clientHeight || textEl.scrollWidth > container.clientWidth;
+            if (!overflows) break;
+            fontSize -= 2;
+            textEl.style.fontSize = `${fontSize}px`;
+        }
     }
 
     formatDamageValue(value) {
