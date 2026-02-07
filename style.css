@@ -118,10 +118,10 @@ input[type="text"]::placeholder {
     font-size: 11px;
 }
 
-/* Кружки брони и структуры */
+/* Броня, структура и перегрев в один ряд */
 .circle-input-group {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 12px;
     margin-bottom: 12px;
 }
@@ -220,6 +220,64 @@ input[type="text"]::placeholder {
 .special-abilities-input input {
     height: 26px;
     font-size: 11px;
+}
+
+.era-display-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+.era-display-toggle input {
+    margin: 0;
+    width: auto;
+    height: auto;
+}
+.era-details {
+    margin-top: 4px;
+}
+.era-details summary {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 11px;
+    color: #bdc3c7;
+    text-transform: uppercase;
+    list-style: none;
+    padding: 4px 0;
+}
+.era-details summary::-webkit-details-marker {
+    display: none;
+}
+.era-details summary::before {
+    content: "▶ ";
+    font-size: 10px;
+}
+.era-details[open] summary::before {
+    content: "▼ ";
+}
+.era-details .era-checkboxes-list {
+    margin-top: 6px;
+    padding-left: 8px;
+}
+.era-checkboxes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.era-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 12px;
+}
+.era-check input {
+    margin: 0;
+    width: auto;
+    height: auto;
 }
 
 /* Кнопки */
@@ -501,6 +559,61 @@ button:hover {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+}
+
+/* Полоска логотипов эр справа на карточке (сверху вниз по порядку, выше блока Critical Hits на BM) */
+.card-era-strip {
+    position: absolute;
+    top: 120px;
+    right: 24px;
+    width: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+.card-era-icon {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    min-height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    margin: 0 auto;
+    align-self: center;
+    filter: brightness(0) invert(0) brightness(0.85);
+}
+.card-era-icon.card-era-available {
+    filter: brightness(0) invert(1) brightness(0.85);
+}
+.card-era-strip .card-era-icon:first-child {
+    margin-left: 3.5px;
+}
+.card-era-strip .card-era-icon-1 {
+    width: 29px;
+    min-width: 29px;
+    max-width: 29px;
+}
+/* Отступы между иконками эр — задаются отдельно для каждого */
+.card-era-strip .card-era-icon-1 { margin-bottom: 5px; }
+.card-era-strip .card-era-icon-2 { margin-bottom: 5px; }
+.card-era-strip .card-era-icon-3 { margin-bottom: 5px; }
+.card-era-strip .card-era-icon-4 { margin-bottom: 5px; }
+.card-era-strip .card-era-icon-5 { margin-bottom: 5px; }
+.card-era-strip .card-era-icon-6 { margin-bottom: 5px; }
+.card-era-strip .card-era-icon-7 {
+    margin-bottom: 0;
+    height: 27px;
+    min-height: 27px;
+    max-height: 27px;
 }
 
 /* Основные характеристики (левый верхний угол) */

@@ -44,6 +44,17 @@ function getDisplayPV(basePV, skill) {
     return Math.max(0, Math.round(displayed));
 }
 
+/** Логотипы эр на карточке: порядок по номеру в имени файла (1, 2, …). */
+const ERA_IMAGES = [
+    'data/1_StarLeagule_dark.png',
+    'data/2_SuccessionWar_dark.png',
+    'data/3_ClanInvasion_dark.png',
+    'data/4_CivilWar_dark.png',
+    'data/5_Jihad_dark.png',
+    'data/6_DarkAge_dark.png',
+    'data/7_ilClan_dark.png'
+];
+
 class CardGenerator {
     constructor() {
         this.initializeElements();
@@ -88,6 +99,9 @@ class CardGenerator {
         this.specialAbilities = document.getElementById('specialAbilities');
         // Mul ID
         this.mulID = document.getElementById('mulID');
+        // Доступные эпохи
+        this.eraCheckboxes = [1, 2, 3, 4, 5, 6, 7].map(n => document.getElementById('era' + n));
+        this.showErasOnCard = document.getElementById('showErasOnCard');
 
         // Кнопки
         this.generateBtn = document.getElementById('generateBtn');
@@ -124,6 +138,13 @@ class CardGenerator {
             this.generateCard();
         });
         this.unitRoleCustom.addEventListener('input', () => this.generateCard());
+
+        this.eraCheckboxes.forEach(cb => {
+            if (cb) cb.addEventListener('change', () => this.generateCard());
+        });
+        if (this.showErasOnCard) {
+            this.showErasOnCard.addEventListener('change', () => this.generateCard());
+        }
 
         // Авто-обновление карточки при изменении полей
         this.bindAutoUpdate();
@@ -351,7 +372,9 @@ class CardGenerator {
             damageL: this.damageL.value,
             overheat: this.overheatValue.value,
             specialAbilities: this.specialAbilities.value,
-            imageUrl: this.currentImageUrl
+            imageUrl: this.currentImageUrl,
+            showEras: this.showErasOnCard ? this.showErasOnCard.checked : true,
+            availableEras: this.eraCheckboxes.map(cb => cb ? cb.checked : false)
         };
     }
 
@@ -444,6 +467,14 @@ class CardGenerator {
         </div>
         
         ${imageHTML}
+        ${data.showEras ? `
+        <div class="card-era-strip" aria-hidden="true">
+            ${ERA_IMAGES.map((path, i) => {
+            const available = data.availableEras && data.availableEras[i];
+            return `<img src="${path}" alt="" class="card-era-icon card-era-icon-${i + 1}${available ? ' card-era-available' : ''}">`;
+        }).join('')}
+        </div>
+        ` : ''}
     </div>
 `;
     }
