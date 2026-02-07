@@ -237,7 +237,7 @@ class CardGenerator {
         // Role: из списка или «Другое»
         const roleSelect = document.getElementById('unitRoleSelect');
         const roleCustom = document.getElementById('unitRoleCustom');
-        const roleOptions = ['Attack','Brawler','Dogfighter','Fast Dogfighter','Fire-Support','Interceptor','Juggernaut','Missile Boat','None','Scout','Skirmisher','Sniper','Striker','Transport'];
+        const roleOptions = ['Ambusher','Attack','Brawler','Dogfighter','Fast Dogfighter','Fire-Support','Interceptor','Juggernaut','Missile Boat','None','Scout','Skirmisher','Sniper','Striker','Transport'];
         if (roleOptions.includes(cardData.role)) {
             roleSelect.value = cardData.role;
             roleCustom.style.display = 'none';
