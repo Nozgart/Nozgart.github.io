@@ -203,16 +203,22 @@ class CardGenerator {
             alert('Введите MUL ID (число) в поле Mul ID.');
             return;
         }
-        const cardData = await getUnitDataFromMul(id);
-        if (!cardData) {
-            alert(
-                'Не удалось загрузить данные с Master Unit List.\n\n' +
-                '• Проверьте правильность MUL ID.\n' +
-                '• Браузер может блокировать запрос к MUL. Разрешите переход на masterunitlist.info (в предупреждении о сертификате или в настройках) — после этого кнопка должна подгружать данные.'
-            );
-            return;
+        const overlay = document.getElementById('mulLoadingOverlay');
+        if (overlay) {
+            overlay.classList.add('is-visible');
+            overlay.setAttribute('aria-hidden', 'false');
         }
-        document.getElementById('unitName').value = cardData.name;
+        try {
+            const cardData = await getUnitDataFromMul(id);
+            if (!cardData) {
+                alert(
+                    'Не удалось загрузить данные с Master Unit List.\n\n' +
+                    '• Проверьте правильность MUL ID.\n' +
+                    '• Браузер может блокировать запрос к MUL. Разрешите переход на masterunitlist.info (в предупреждении о сертификате или в настройках) — после этого кнопка должна подгружать данные.'
+                );
+                return;
+            }
+            document.getElementById('unitName').value = cardData.name;
         document.getElementById('unitVariant').value = cardData.variant;
         // TP: BM/BA или «Другое» + своё значение
         const typeSelect = document.getElementById('unitTypeSelect');
@@ -255,6 +261,12 @@ class CardGenerator {
 
         this.handleImageUrlChange();
         this.generateCard();
+        } finally {
+            if (overlay) {
+                overlay.classList.remove('is-visible');
+                overlay.setAttribute('aria-hidden', 'true');
+            }
+        }
     }
 
     generateCard() {
