@@ -69,28 +69,9 @@
                     <label for="unitSkill">SKILL</label>
                     <input type="number" id="unitSkill" value="4" min="0" max="7">
                 </div>
-            </div>
-
-            <!-- Очковая стоимость -->
-            <div class="input-group">
-                <label for="unitPoints">PV</label>
-                <input type="number" id="unitPoints" value="11" min="0" max="100" style="width: 60px;">
-            </div>
-
-            <!-- Броня и структура -->
-            <div class="circle-input-group">
-                <div class="circle-input">
-                    <label for="armorValue">Armor</label>
-                    <div class="circle-input-row">
-                        <input type="number" id="armorValue" value="5" min="0" max="20">
-                    </div>
-                </div>
-                <div class="circle-input">
-                    <label for="structureValue">Structure</label>
-                    <div class="circle-input-row">
-                        <input type="number" id="structureValue" value="5" min="0" max="20">
-                        <div class="circle-preview" id="structurePreview"></div>
-                    </div>
+                <div>
+                    <label for="unitPoints">PV</label>
+                    <input type="number" id="unitPoints" value="11" min="0" max="100">
                 </div>
             </div>
 
@@ -113,10 +94,33 @@
                 </div>
             </div>
 
-            <!-- Перегрев -->
-            <div class="input-group">
-                <label for="overheatValue">OV</label>
-                <input type="number" id="overheatValue" value="0" min="0" max="99" style="width: 60px;">
+            <!-- Броня, структура и перегрев -->
+            <div class="circle-input-group">
+                <div class="circle-input">
+                    <label for="armorValue">Armor</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="armorValue" value="5" min="0" max="20">
+                    </div>
+                </div>
+                <div class="circle-input">
+                    <label for="structureValue">Structure</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="structureValue" value="5" min="0" max="20">
+                        <div class="circle-preview" id="structurePreview"></div>
+                    </div>
+                </div>
+                <div class="circle-input">
+                    <label for="overheatValue">OV</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="overheatValue" value="0" min="0" max="99">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Особые способности -->
+            <div class="special-abilities-input">
+                <label for="specialAbilities">Special abilities</label>
+                <input type="text" id="specialAbilities" value="CASE,FLK1/1/1,IF2,LRM2/2/2,OMNI">
             </div>
 
             <!-- Изображение -->
@@ -132,15 +136,28 @@
                 </div>
             </div>
 
-            <!-- Особые способности -->
-            <div class="special-abilities-input">
-                <label for="specialAbilities">Special abilities</label>
-                <input type="text" id="specialAbilities" value="CASE,FLK1/1/1,IF2,LRM2/2/2,OMNI">
-            </div>
-
             <div class="special-abilities-input">
                 <label for="mulID">Mul ID</label>
                 <input type="text" id="mulID" value="">
+            </div>
+
+            <div class="input-group era-options">
+                <label class="era-display-toggle">
+                    <input type="checkbox" id="showErasOnCard" checked>
+                    Display eras on card
+                </label>
+                <details class="era-details">
+                    <summary>Available eras</summary>
+                    <div class="era-checkboxes-list">
+                        <label class="era-check"><input type="checkbox" id="era1" checked> Star League</label>
+                        <label class="era-check"><input type="checkbox" id="era2" checked> Succession War</label>
+                        <label class="era-check"><input type="checkbox" id="era3" checked> Clan Invasion</label>
+                        <label class="era-check"><input type="checkbox" id="era4"> Civil War</label>
+                        <label class="era-check"><input type="checkbox" id="era5"> Jihad</label>
+                        <label class="era-check"><input type="checkbox" id="era6"> Dark Age</label>
+                        <label class="era-check"><input type="checkbox" id="era7"> ilClan</label>
+                    </div>
+                </details>
             </div>
 
             <!-- Кнопки -->
