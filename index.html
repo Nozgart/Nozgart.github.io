@@ -21,7 +21,23 @@
                 <input type="text" id="unitName" value="">
                 
                 <label for="unitRole">Role</label>
-                <input type="text" id="unitRole" value="" maxlength="20">
+                <input type="text" id="unitRole" list="roleList" value="" maxlength="30" placeholder="Выберите или введите свою роль">
+                <datalist id="roleList">
+                    <option value="Attack">
+                    <option value="Brawler">
+                    <option value="Dogfighter">
+                    <option value="Fast Dogfighter">
+                    <option value="Fire-Support">
+                    <option value="Interceptor">
+                    <option value="Juggernaut">
+                    <option value="Missile Boat">
+                    <option value="None">
+                    <option value="Scout">
+                    <option value="Skirmisher">
+                    <option value="Sniper">
+                    <option value="Striker">
+                    <option value="Transport">
+                </datalist>
             </div>
 
             <!-- Компактная группа характеристик -->

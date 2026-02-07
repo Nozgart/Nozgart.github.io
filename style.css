@@ -320,7 +320,7 @@ button:hover {
 }
 
 .alpha-strike-card.infantry .stat-item.role {
-    top: 80px;
+    top: 82px;
     left: 63px;
     width: 150px;
 }
@@ -357,12 +357,12 @@ button:hover {
 
 /* Броня (A:) и структура (S:) — как у меха по вертикали, без блока тепла */
 .alpha-strike-card.infantry .armor-section {
-    top: 321px;
+    top: 320px;
     left: 45px;
 }
 
 .alpha-strike-card.infantry .structure-section {
-    top: 346px;
+    top: 345px;
     left: 45px;
 }
 
