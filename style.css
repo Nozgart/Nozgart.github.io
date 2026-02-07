@@ -397,9 +397,10 @@ button:hover {
 }
 
 .stat-item.role {
+    text-align: left;
     top: 80px;
     left: 63px;
-    width: 100px;
+    width: 150px;
 }
 
 .stat-item.skill {
