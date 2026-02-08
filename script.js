@@ -517,20 +517,14 @@ class CardGenerator {
     /**
      * Применяет к контексту canvas эффект иконки эпохи (белая или тёмная).
      * html2canvas не сохраняет CSS filter при экспорте, поэтому подменяем картинки в onclone.
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {number} w
-     * @param {number} h
-     * @param {boolean} available — true = белая (available), false = тёмная (как в CSS)
      */
     applyEraIconFilterToContext(ctx, w, h, available) {
         const imageData = ctx.getImageData(0, 0, w, h);
         const data = imageData.data;
-        const value = available ? Math.round(255 * 0.85) : Math.round(255 * 0.15); // белая 217 / тёмная 38
+        const value = available ? Math.round(255 * 0.85) : Math.round(255 * 0.15);
         for (let i = 0; i < data.length; i += 4) {
             if (data[i + 3] > 0) {
-                data[i] = value;
-                data[i + 1] = value;
-                data[i + 2] = value;
+                data[i] = data[i + 1] = data[i + 2] = value;
             }
         }
         ctx.putImageData(imageData, 0, 0);
