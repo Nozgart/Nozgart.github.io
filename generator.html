@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BattleTech Alpha Strike Color Card Generator">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>BattleTech Alpha Strike — Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="page-nav">
+            <a href="index.html" class="nav-link">← Main</a>
+        </nav>
+
+        <!-- Панель управления -->
+        <div class="controls">
+            <!-- Основная информация -->
+            <div class="input-group">
+                <label for="unitVariant">Model</label>
+                <input type="text" id="unitVariant" value="">
+                
+                <label for="unitName">Name</label>
+                <input type="text" id="unitName" value="">
+                
+                <label for="unitRoleSelect">Role</label>
+                <select id="unitRoleSelect">
+                    <option value="">—</option>
+                    <option value="Ambusher">Ambusher</option>
+                    <option value="Attack">Attack</option>
+                    <option value="Brawler">Brawler</option>
+                    <option value="Dogfighter">Dogfighter</option>
+                    <option value="Fast Dogfighter">Fast Dogfighter</option>
+                    <option value="Fire-Support">Fire-Support</option>
+                    <option value="Interceptor">Interceptor</option>
+                    <option value="Juggernaut">Juggernaut</option>
+                    <option value="Missile Boat">Missile Boat</option>
+                    <option value="None">None</option>
+                    <option value="Scout">Scout</option>
+                    <option value="Skirmisher">Skirmisher</option>
+                    <option value="Sniper">Sniper</option>
+                    <option value="Striker">Striker</option>
+                    <option value="Transport">Transport</option>
+                    <option value="__other__">Custom</option>
+                </select>
+                <input type="text" id="unitRoleCustom" class="custom-value-input" placeholder="Custom role" maxlength="30" style="display:none;">
+            </div>
+
+            <!-- Компактная группа характеристик -->
+            <div class="compact-input-group">
+                <div>
+                    <label for="unitTypeSelect">TP</label>
+                    <select id="unitTypeSelect">
+                        <option value="BM">BM</option>
+                        <option value="IM">IM</option>
+                        <option value="PM">PM</option>
+                        <option value="BA">BA</option>
+                        <option value="CI">CI</option>
+                        <option value="__other__">Custom</option>
+                    </select>
+                    <input type="text" id="unitTypeCustom" class="custom-value-input" placeholder="Custom type" maxlength="8" style="display:none;">
+                </div>
+                <div>
+                    <label for="unitSize">SZ</label>
+                    <input type="number" id="unitSize" value="1" min="1" max="99">
+                </div>
+                <div>
+                    <label for="unitMove">MV</label>
+                    <input type="text" id="unitMove" value="6&quot;" maxlength="8">
+                </div>
+                <div>
+                    <label for="unitSkill">SKILL</label>
+                    <input type="number" id="unitSkill" value="4" min="0" max="7">
+                </div>
+                <div>
+                    <label for="unitPoints">PV</label>
+                    <input type="number" id="unitPoints" value="11" min="0" max="100">
+                </div>
+            </div>
+
+            <!-- Урон -->
+            <div class="input-group">
+                <label>Damage:</label>
+                <div class="damage-inputs">
+                    <div>
+                        <label for="damageS">S (+0)</label>
+                        <input type="text" id="damageS" value="0" pattern="[0-9*]*" maxlength="3">
+                    </div>
+                    <div>
+                        <label for="damageM">M (+2)</label>
+                        <input type="text" id="damageM" value="0" pattern="[0-9*]*" maxlength="3">
+                    </div>
+                    <div>
+                        <label for="damageL">L (+4)</label>
+                        <input type="text" id="damageL" value="0" pattern="[0-9*]*" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Броня, структура и перегрев -->
+            <div class="circle-input-group">
+                <div class="circle-input">
+                    <label for="armorValue">Armor</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="armorValue" value="5" min="0" max="20">
+                    </div>
+                </div>
+                <div class="circle-input">
+                    <label for="structureValue">Structure</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="structureValue" value="5" min="0" max="20">
+                        <div class="circle-preview" id="structurePreview"></div>
+                    </div>
+                </div>
+                <div class="circle-input">
+                    <label for="overheatValue">OV</label>
+                    <div class="circle-input-row">
+                        <input type="number" id="overheatValue" value="0" min="0" max="99">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Особые способности -->
+            <div class="special-abilities-input">
+                <label for="specialAbilities">Special abilities</label>
+                <input type="text" id="specialAbilities" value="CASE,FLK1/1/1,IF2,LRM2/2/2,OMNI">
+            </div>
+
+            <!-- Изображение -->
+            <div class="image-input-group">
+                <label for="imageUrl">Image URL:</label>
+                <input type="text" id="imageUrl" placeholder="Image URL">
+                
+                <label for="imageUpload">Choose image</label>
+                <input type="file" id="imageUpload" accept="image/*">
+                
+                <div class="image-preview" id="imagePreview">
+                    <span>Image preview</span>
+                </div>
+            </div>
+
+            <div class="special-abilities-input">
+                <label for="mulID">Mul ID</label>
+                <input type="text" id="mulID" value="">
+            </div>
+
+            <div class="input-group era-options">
+                <label class="era-display-toggle">
+                    <input type="checkbox" id="showErasOnCard">
+                    Display eras on card
+                </label>
+                <details class="era-details">
+                    <summary>Available eras</summary>
+                    <div class="era-checkboxes-list">
+                        <label class="era-check"><input type="checkbox" id="era1"> Star League</label>
+                        <label class="era-check"><input type="checkbox" id="era2"> Succession War</label>
+                        <label class="era-check"><input type="checkbox" id="era3"> Clan Invasion</label>
+                        <label class="era-check"><input type="checkbox" id="era4"> Civil War</label>
+                        <label class="era-check"><input type="checkbox" id="era5"> Jihad</label>
+                        <label class="era-check"><input type="checkbox" id="era6"> Dark Age</label>
+                        <label class="era-check"><input type="checkbox" id="era7"> ilClan</label>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="button-group">
+                <button id="generateBtn">Generate</button>
+                <button id="exportBtn">Export PNG</button>
+                <button id="exportMul">Export MUL</button>
+            </div>
+        </div>
+
+        <!-- Индикатор загрузки MUL -->
+        <div id="mulLoadingOverlay" class="mul-loading-overlay" aria-hidden="true">
+            <div class="mul-loading-spinner"></div>
+            <p class="mul-loading-text">Loading data from Master Unit List…</p>
+        </div>
+
+        <!-- Область предпросмотра карточки -->
+        <div class="preview">
+            <h2>Preview</h2>
+            <div id="cardContainer">
+                <!-- Сюда будет вставлена сгенерированная карточка -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+    <script src="mulImport.js"></script>
+</body>
+</html>

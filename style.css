@@ -911,3 +911,17 @@ button:hover {
     background: #e74c3c;
     border-radius: 3px;
 }
+
+/* Навигация «назад на главную» для страниц генератора и калькулятора */
+.page-nav {
+    margin-bottom: 16px;
+    grid-column: 1 / -1;
+}
+.page-nav .nav-link {
+    color: #f1c40f;
+    text-decoration: none;
+    font-size: 14px;
+}
+.page-nav .nav-link:hover {
+    text-decoration: underline;
+}
