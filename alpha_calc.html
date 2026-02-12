@@ -323,6 +323,7 @@
             padding: 10px 15px;
             background: #1e3c72;
             text-align: left;
+            overflow: hidden;
         }
         .main-nav a {
             color: #f7ef8a;
@@ -330,52 +331,77 @@
             font-size: 0.95em;
         }
         .main-nav a:hover { text-decoration: underline; }
+        .lang-switch {
+            float: right;
+            font-size: 0.9em;
+        }
+        .lang-switch button {
+            background: none;
+            border: 1px solid #f7ef8a;
+            color: #f7ef8a;
+            padding: 4px 10px;
+            margin-left: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: inherit;
+        }
+        .lang-switch button:hover { background: rgba(247,239,138,0.2); }
+        .lang-switch button.active {
+            background: #f7ef8a;
+            color: #1e3c72;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <nav class="main-nav"><a href="index.html">← Main</a></nav>
+        <nav class="main-nav">
+            <a href="index.html" data-i18n="navMain">← Main</a>
+            <span class="lang-switch">
+                <button type="button" data-lang="en" id="langEn">EN</button>
+                <button type="button" data-lang="ru" id="langRu">RU</button>
+            </span>
+        </nav>
         <div class="header">
             <h1>BATTLETECH ALPHA STRIKE</h1>
-            <div class="subtitle">КАЛЬКУЛЯТОР ХОДОВ</div>
+            <div class="subtitle" data-i18n="subtitle">TURN CALCULATOR</div>
         </div>
 
         <div class="input-section">
             <div class="player-input initiative">
-                <h3>С ИНИЦИАТИВОЙ</h3>
+                <h3 data-i18n="withInitiative">WITH INITIATIVE</h3>
                 <div class="input-row">
-                    <label>Количество юнитов:</label>
+                    <label data-i18n="unitsCount">Number of units:</label>
                     <input type="number" id="initiativeUnits" min="1" value="6">
                 </div>
             </div>
             <div class="player-input no-initiative">
-                <h3>БЕЗ ИНИЦИАТИВЫ</h3>
+                <h3 data-i18n="withoutInitiative">WITHOUT INITIATIVE</h3>
                 <div class="input-row">
-                    <label>Количество юнитов:</label>
+                    <label data-i18n="unitsCount">Number of units:</label>
                     <input type="number" id="noInitiativeUnits" min="1" value="2">
                 </div>
             </div>
             
-            <div class="error-message" id="errorMessage">
-                Ошибка: количество юнитов должно быть положительным числом!
+            <div class="error-message" id="errorMessage" data-i18n="errorUnits">
+                Error: number of units must be a positive number!
             </div>
 
-            <button class="calculate-btn" onclick="calculateMovement()">
-                РАССЧИТАТЬ ХОДЫ
+            <button class="calculate-btn" onclick="calculateMovement()" data-i18n="btnCalculate">
+                CALCULATE MOVES
             </button>
         </div>
 
         <div class="results-section" id="resultsSection">
             <div class="summary">
-                <h3>СВОДКА БОЯ</h3>
+                <h3 data-i18n="summaryTitle">BATTLE SUMMARY</h3>
                 <div class="summary-stats">
                     <div class="stat initiative">
-                        <strong>С ИНИЦИАТИВОЙ</strong>
-                        <span id="initiativeTotal">0</span> юнитов
+                        <strong data-i18n="withInitiative">WITH INITIATIVE</strong>
+                        <span id="initiativeTotal">0</span> <span data-i18n="units">units</span>
                     </div>
                     <div class="stat no-initiative">
-                        <strong>БЕЗ ИНИЦИАТИВЫ</strong>
-                        <span id="noInitiativeTotal">0</span> юнитов
+                        <strong data-i18n="withoutInitiative">WITHOUT INITIATIVE</strong>
+                        <span id="noInitiativeTotal">0</span> <span data-i18n="units">units</span>
                     </div>
                 </div>
             </div>
@@ -384,12 +410,10 @@
                 <table class="movement-table">
                     <thead>
                         <tr>
-                            <th>ФАЗА</th>
-                            <th>СООТНОШЕНИЕ</th>
-                            <th>БЕЗ ИНИЦ.</th>
-                            <th>С ИНИЦ.</th>
-                            <th>ОСТАЛОСЬ БЕЗ ИНИЦ.</th>
-                            <th>ОСТАЛОСЬ С ИНИЦ.</th>
+                            <th data-i18n="thPhase">PHASE</th>
+                            <th data-i18n="thRatio">RATIO</th>
+                            <th data-i18n="thNoInit">NO INIT.</th>
+                            <th data-i18n="thInit">INIT.</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -401,6 +425,56 @@
     </div>
 
     <script>
+        const i18n = {
+            en: {
+                navMain: '← Main',
+                subtitle: 'TURN CALCULATOR',
+                withInitiative: 'WITH INITIATIVE',
+                withoutInitiative: 'WITHOUT INITIATIVE',
+                unitsCount: 'Number of units:',
+                errorUnits: 'Error: number of units must be a positive number!',
+                btnCalculate: 'CALCULATE MOVES',
+                summaryTitle: 'BATTLE SUMMARY',
+                units: 'units',
+                thPhase: 'PHASE',
+                thRatio: 'RATIO',
+                thNoInit: 'NO INIT.',
+                thInit: 'INIT.',
+                pageTitle: 'Battletech Alpha Strike - Turn Calculator'
+            },
+            ru: {
+                navMain: '← Главная',
+                subtitle: 'КАЛЬКУЛЯТОР ХОДОВ',
+                withInitiative: 'С ИНИЦИАТИВОЙ',
+                withoutInitiative: 'БЕЗ ИНИЦИАТИВЫ',
+                unitsCount: 'Количество юнитов:',
+                errorUnits: 'Ошибка: количество юнитов должно быть положительным числом!',
+                btnCalculate: 'РАССЧИТАТЬ ХОДЫ',
+                summaryTitle: 'СВОДКА БОЯ',
+                units: 'юнитов',
+                thPhase: 'ФАЗА',
+                thRatio: 'СООТНОШЕНИЕ',
+                thNoInit: 'БЕЗ ИНИЦ.',
+                thInit: 'С ИНИЦ.',
+                pageTitle: 'Battletech Alpha Strike - Калькулятор ходов'
+            }
+        };
+
+        let currentLang = localStorage.getItem('alphaCalcLang') === 'ru' ? 'ru' : 'en';
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('alphaCalcLang', lang);
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang] && i18n[lang][key]) el.textContent = i18n[lang][key];
+            });
+            document.title = i18n[lang].pageTitle;
+            document.querySelectorAll('.lang-switch button').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+        }
+
         function calculateBattletechMovement(withInitiativeUnits, withoutInitiativeUnits) {
             const phases = [];
             let initiativeRemaining = withInitiativeUnits;
@@ -479,8 +553,6 @@
                     <td><span class="ratio-badge">${phase.ratio}</span></td>
                     <td class="moves-count no-initiative-move">${phase.noInitiativeMoves}</td>
                     <td class="moves-count initiative-move">${phase.initiativeMoves}</td>
-                    <td class="remaining-count">${phase.noInitiativeRemaining}</td>
-                    <td class="remaining-count">${phase.initiativeRemaining}</td>
                 `;
                 
                 tableBody.appendChild(row);
@@ -492,12 +564,13 @@
             resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // Авторасчет при загрузке
         document.addEventListener('DOMContentLoaded', function() {
+            applyLanguage(currentLang);
+            document.getElementById('langEn').addEventListener('click', function() { applyLanguage('en'); });
+            document.getElementById('langRu').addEventListener('click', function() { applyLanguage('ru'); });
             calculateMovement();
         });
 
-        // Авторасчет при изменении значений
         document.getElementById('initiativeUnits').addEventListener('input', calculateMovement);
         document.getElementById('noInitiativeUnits').addEventListener('input', calculateMovement);
     </script>
