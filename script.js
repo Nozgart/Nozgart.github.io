@@ -45,10 +45,16 @@ function getDisplayPV(basePV, skill) {
 }
 
 /**
- * Целевой размер карточки в Word (см): 8,90 × 6,30.
- * 635 давало 6,29×8,69 — чуть уменьшаем DPI, чтобы вышло 6,30×8,90.
+ * Целевой размер карточки в Word (см): ширина 8,90, высота 6,30.
+ * Карточка 2100×1500 px; в pHYs задаём разный ppm по X и Y для точного попадания.
  */
-const CARD_EXPORT_DPI = 620;
+const CARD_EXPORT_WIDTH_CM = 8.90;
+const CARD_EXPORT_HEIGHT_CM = 6.30;
+const CARD_PX_WIDTH = 2100;
+const CARD_PX_HEIGHT = 1500;
+/** Пикселей на метр: размер в см = px / ppm * 100 → ppm = px * 100 / cm */
+const CARD_PPM_X = Math.round((CARD_PX_WIDTH * 100) / CARD_EXPORT_WIDTH_CM);
+const CARD_PPM_Y = Math.round((CARD_PX_HEIGHT * 100) / CARD_EXPORT_HEIGHT_CM);
 
 /** CRC32 для PNG-chunk (таблица один раз). */
 function getCrc32Table() {
@@ -70,35 +76,35 @@ function crc32(data, start, length) {
 }
 
 /**
- * Вставляет в PNG chunk pHYs (DPI), чтобы в Word карточка была 8,90×6,30 см.
+ * Вставляет в PNG chunk pHYs (разрешение по X и Y), чтобы в Word было 8,90×6,30 см.
  * @param {ArrayBuffer} pngBuffer
- * @param {number} dpi
+ * @param {number} ppmX — пикселей на метр по горизонтали
+ * @param {number} ppmY — пикселей на метр по вертикали
  * @returns {ArrayBuffer}
  */
-function setPngDpi(pngBuffer, dpi) {
+function setPngDpi(pngBuffer, ppmX, ppmY) {
     if (pngBuffer.byteLength < 33) return pngBuffer;
-    const ppm = Math.round((dpi * 100) / 2.54);
     const typeAndData = new Uint8Array(13);
     typeAndData[0] = 0x70;
     typeAndData[1] = 0x48;
     typeAndData[2] = 0x59;
     typeAndData[3] = 0x73;
-    typeAndData[4] = (ppm >>> 24) & 0xff;
-    typeAndData[5] = (ppm >>> 16) & 0xff;
-    typeAndData[6] = (ppm >>> 8) & 0xff;
-    typeAndData[7] = ppm & 0xff;
-    typeAndData[8] = (ppm >>> 24) & 0xff;
-    typeAndData[9] = (ppm >>> 16) & 0xff;
-    typeAndData[10] = (ppm >>> 8) & 0xff;
-    typeAndData[11] = ppm & 0xff;
+    typeAndData[4] = (ppmX >>> 24) & 0xff;
+    typeAndData[5] = (ppmX >>> 16) & 0xff;
+    typeAndData[6] = (ppmX >>> 8) & 0xff;
+    typeAndData[7] = ppmX & 0xff;
+    typeAndData[8] = (ppmY >>> 24) & 0xff;
+    typeAndData[9] = (ppmY >>> 16) & 0xff;
+    typeAndData[10] = (ppmY >>> 8) & 0xff;
+    typeAndData[11] = ppmY & 0xff;
     typeAndData[12] = 1;
     const crc = crc32(typeAndData, 0, 13);
     const chunk = new ArrayBuffer(21);
     const c = new DataView(chunk);
     c.setUint32(0, 9, false);
     c.setUint32(4, 0x70485973, false);
-    c.setUint32(8, ppm, false);
-    c.setUint32(12, ppm, false);
+    c.setUint32(8, ppmX, false);
+    c.setUint32(12, ppmY, false);
     c.setUint8(16, 1);
     c.setUint32(17, crc, false);
     const out = new ArrayBuffer(pngBuffer.byteLength + 21);
@@ -633,7 +639,7 @@ class CardGenerator {
             canvas.toBlob(blob => {
                 const name = `battletech-card-${this.unitVariant.value.toLowerCase().replace(/\s+/g, '-')}-${this.unitName.value.toLowerCase().replace(/\s+/g, '-')}.png`;
                 blob.arrayBuffer().then(buf => {
-                    const withDpi = setPngDpi(buf, CARD_EXPORT_DPI);
+                    const withDpi = setPngDpi(buf, CARD_PPM_X, CARD_PPM_Y);
                     const link = document.createElement('a');
                     link.download = name;
                     link.href = URL.createObjectURL(new Blob([withDpi], { type: 'image/png' }));
