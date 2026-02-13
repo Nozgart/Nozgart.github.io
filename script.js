@@ -46,9 +46,9 @@ function getDisplayPV(basePV, skill) {
 
 /**
  * Целевой размер карточки в Word (см): 8,90 × 6,30.
- * Подправлено по факту (при 599 выходило 6,67×9,21) — увеличен DPI, чтобы в DOCX было ближе к 6,30×8,90.
+ * 635 давало 6,29×8,69 — чуть уменьшаем DPI, чтобы вышло 6,30×8,90.
  */
-const CARD_EXPORT_DPI = 635;
+const CARD_EXPORT_DPI = 620;
 
 /** CRC32 для PNG-chunk (таблица один раз). */
 function getCrc32Table() {
