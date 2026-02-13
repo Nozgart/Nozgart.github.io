@@ -45,10 +45,10 @@ function getDisplayPV(basePV, skill) {
 }
 
 /**
- * Целевой размер в Word: ширина 8,90 см (фиксируем), высота получится ~6,36 см.
- * Word не использует разный DPI по X/Y — задаём один ppm под ширину 8,90 см.
+ * Целевой размер карточки в Word (см): 8,90 × 6,30.
+ * Подправлено по факту (при 599 выходило 6,67×9,21) — 620 давало 6,44×8,90.
  */
-const CARD_PPM_SINGLE = Math.round((2100 * 100) / 8.90);
+const CARD_EXPORT_DPI = 620;
 
 /** CRC32 для PNG-chunk (таблица один раз). */
 function getCrc32Table() {
@@ -70,13 +70,14 @@ function crc32(data, start, length) {
 }
 
 /**
- * Вставляет в PNG chunk pHYs (один ppm для обеих осей), чтобы в Word ширина была 8,90 см.
+ * Вставляет в PNG chunk pHYs (DPI), чтобы в Word карточка была около 8,90×6,30 см.
  * @param {ArrayBuffer} pngBuffer
- * @param {number} ppm — пикселей на метр (одно значение для X и Y)
+ * @param {number} dpi
  * @returns {ArrayBuffer}
  */
-function setPngDpi(pngBuffer, ppm) {
+function setPngDpi(pngBuffer, dpi) {
     if (pngBuffer.byteLength < 33) return pngBuffer;
+    const ppm = Math.round((dpi * 100) / 2.54);
     const typeAndData = new Uint8Array(13);
     typeAndData[0] = 0x70;
     typeAndData[1] = 0x48;
@@ -632,7 +633,7 @@ class CardGenerator {
             canvas.toBlob(blob => {
                 const name = `battletech-card-${this.unitVariant.value.toLowerCase().replace(/\s+/g, '-')}-${this.unitName.value.toLowerCase().replace(/\s+/g, '-')}.png`;
                 blob.arrayBuffer().then(buf => {
-                    const withDpi = setPngDpi(buf, CARD_PPM_SINGLE);
+                    const withDpi = setPngDpi(buf, CARD_EXPORT_DPI);
                     const link = document.createElement('a');
                     link.download = name;
                     link.href = URL.createObjectURL(new Blob([withDpi], { type: 'image/png' }));
