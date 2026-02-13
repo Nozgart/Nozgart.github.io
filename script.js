@@ -44,6 +44,71 @@ function getDisplayPV(basePV, skill) {
     return Math.max(0, Math.round(displayed));
 }
 
+/**
+ * Целевой размер карточки в Word (см): 8,90 × 6,30.
+ * Карточка в пикселях 2100×1500 (scale 3). DPI задаёт размер при вставке в DOCX.
+ */
+const CARD_EXPORT_DPI = Math.round((2100 * 2.54) / 8.90);
+
+/** CRC32 для PNG-chunk (таблица один раз). */
+function getCrc32Table() {
+    if (window.__pngCrc32Table) return window.__pngCrc32Table;
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+        let c = n;
+        for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        t[n] = c;
+    }
+    window.__pngCrc32Table = t;
+    return t;
+}
+function crc32(data, start, length) {
+    const table = getCrc32Table();
+    let crc = 0xffffffff;
+    for (let i = 0; i < length; i++) crc = table[(crc ^ data[start + i]) & 0xff] ^ (crc >>> 8);
+    return (crc ^ 0xffffffff) >>> 0;
+}
+
+/**
+ * Вставляет в PNG chunk pHYs (DPI), чтобы в Word карточка была 8,90×6,30 см.
+ * @param {ArrayBuffer} pngBuffer
+ * @param {number} dpi
+ * @returns {ArrayBuffer}
+ */
+function setPngDpi(pngBuffer, dpi) {
+    if (pngBuffer.byteLength < 33) return pngBuffer;
+    const ppm = Math.round((dpi * 100) / 2.54);
+    const typeAndData = new Uint8Array(13);
+    typeAndData[0] = 0x70;
+    typeAndData[1] = 0x48;
+    typeAndData[2] = 0x59;
+    typeAndData[3] = 0x73;
+    typeAndData[4] = (ppm >>> 24) & 0xff;
+    typeAndData[5] = (ppm >>> 16) & 0xff;
+    typeAndData[6] = (ppm >>> 8) & 0xff;
+    typeAndData[7] = ppm & 0xff;
+    typeAndData[8] = (ppm >>> 24) & 0xff;
+    typeAndData[9] = (ppm >>> 16) & 0xff;
+    typeAndData[10] = (ppm >>> 8) & 0xff;
+    typeAndData[11] = ppm & 0xff;
+    typeAndData[12] = 1;
+    const crc = crc32(typeAndData, 0, 13);
+    const chunk = new ArrayBuffer(21);
+    const c = new DataView(chunk);
+    c.setUint32(0, 9, false);
+    c.setUint32(4, 0x70485973, false);
+    c.setUint32(8, ppm, false);
+    c.setUint32(12, ppm, false);
+    c.setUint8(16, 1);
+    c.setUint32(17, crc, false);
+    const out = new ArrayBuffer(pngBuffer.byteLength + 21);
+    const outArr = new Uint8Array(out);
+    outArr.set(new Uint8Array(pngBuffer, 0, 33), 0);
+    outArr.set(new Uint8Array(chunk), 33);
+    outArr.set(new Uint8Array(pngBuffer, 33), 54);
+    return out;
+}
+
 /** Логотипы эр на карточке: порядок по номеру в имени файла (1, 2, …). */
 const ERA_IMAGES = [
     'data/1_StarLeagule_dark.png',
@@ -565,10 +630,17 @@ class CardGenerator {
                 });
             }
         }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `battletech-card-${this.unitVariant.value.toLowerCase().replace(/\s+/g, '-')}-${this.unitName.value.toLowerCase().replace(/\s+/g, '-')}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+            canvas.toBlob(blob => {
+                const name = `battletech-card-${this.unitVariant.value.toLowerCase().replace(/\s+/g, '-')}-${this.unitName.value.toLowerCase().replace(/\s+/g, '-')}.png`;
+                blob.arrayBuffer().then(buf => {
+                    const withDpi = setPngDpi(buf, CARD_EXPORT_DPI);
+                    const link = document.createElement('a');
+                    link.download = name;
+                    link.href = URL.createObjectURL(new Blob([withDpi], { type: 'image/png' }));
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                });
+            }, 'image/png');
         });
     }
 }
